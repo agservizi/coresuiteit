@@ -16,6 +16,7 @@ try {
 // Configurazione del sito
 define('SITE_NAME', 'Agenzia Servizi');
 define('BASE_URL', 'http://localhost/coresuite/');
+define('BASE_PATH', __DIR__ . '/../'); // Define BASE_PATH
 
 // Timezone
 date_default_timezone_set('Europe/Rome');

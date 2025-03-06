@@ -3,8 +3,8 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 session_start();
 require_once 'config/config.php';
-require_once 'includes/auth.php';
-require_once 'includes/functions.php';
+require_once BASE_PATH . 'includes/auth.php';
+require_once BASE_PATH . 'includes/functions.php';
 
 // Verifica se l'utente è loggato, altrimenti reindirizza alla pagina di login
 if (!isLoggedIn() && basename($_SERVER['PHP_SELF']) != 'login.php') {

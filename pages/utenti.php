@@ -1,5 +1,5 @@
 <?php
-require_once '../includes/functions.php';
+require_once BASE_PATH . 'includes/functions.php';
 
 // Controllo permessi
 if (!isLoggedIn() || !hasRole('admin')) {
