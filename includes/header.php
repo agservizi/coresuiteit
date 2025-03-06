@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo SITE_NAME; ?> - Gestionale</title>
+    <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="assets/css/style.css" rel="stylesheet">
@@ -15,7 +16,7 @@
             <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse">
                 <div class="position-sticky pt-3">
                     <div class="text-center mb-4">
-                        <h5 class="text-white">Agenzia Servizi</h5>
+                        <img src="assets/img/logo.png" alt="Agenzia Servizi" class="img-fluid">
                     </div>
                     <ul class="nav flex-column">
                         <li class="nav-item">
@@ -83,6 +84,8 @@
                             case 'servizi-digitali': echo 'Servizi Digitali'; break;
                             case 'clienti': echo 'Gestione Clienti'; break;
                             case 'utenti': echo 'Gestione Utenti'; break;
+                            case 'profilo': echo 'Profilo Utente'; break;
+                            case 'impostazioni': echo 'Impostazioni Utente'; break;
                             default: echo 'Dashboard';
                         }
                         ?>
@@ -93,8 +96,8 @@
                                 <i class="fas fa-user me-1"></i> <?php echo $_SESSION['user_name']; ?>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
-                                <li><a class="dropdown-item" href="#"><i class="fas fa-user-edit me-1"></i> Profilo</a></li>
-                                <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-1"></i> Impostazioni</a></li>
+                                <li><a class="dropdown-item" href="index.php?page=profilo"><i class="fas fa-user-edit me-1"></i> Profilo</a></li>
+                                <li><a class="dropdown-item" href="index.php?page=impostazioni"><i class="fas fa-cog me-1"></i> Impostazioni</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item text-danger" href="logout.php"><i class="fas fa-sign-out-alt me-1"></i> Logout</a></li>
                             </ul>
