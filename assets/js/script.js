@@ -18,52 +18,74 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Funzione per inizializzare i grafici della dashboard
 function initCharts() {
-  // Grafico transazioni
-  var ctxTransazioni = document.getElementById('transazioniChart').getContext('2d');
-  var transazioniChart = new Chart(ctxTransazioni, {
-    type: 'line',
-    data: {
-      labels: ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'],
-      datasets: [{
-        label: 'Transazioni',
-        data: [12, 19, 3, 5, 10, 3, 7], // Sostituisci con i dati dal database
-        borderColor: '#007bff',
-        backgroundColor: 'rgba(0, 123, 255, 0.1)',
-        borderWidth: 2,
-        fill: true
-      }]
-    },
-    options: {
-      responsive: true,
-      scales: {
-        y: {
-          beginAtZero: true
+  // Carica i dati delle transazioni dal database
+  loadTransactionData();
+
+  // Carica i dati dei servizi dal database
+  loadServiceData();
+}
+
+// Funzione per caricare i dati delle transazioni dal database
+function loadTransactionData() {
+  fetch('api/get_transaction_data.php')
+    .then(response => response.json())
+    .then(data => {
+      // Grafico transazioni
+      var ctxTransazioni = document.getElementById('transazioniChart').getContext('2d');
+      var transazioniChart = new Chart(ctxTransazioni, {
+        type: 'line',
+        data: {
+          labels: data.labels,
+          datasets: [{
+            label: 'Transazioni',
+            data: data.data,
+            borderColor: '#007bff',
+            backgroundColor: 'rgba(0, 123, 255, 0.1)',
+            borderWidth: 2,
+            fill: true
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
         }
-      }
-    }
-  });
-  
-  // Grafico servizi
-  var ctxServizi = document.getElementById('serviziChart').getContext('2d');
-  var serviziChart = new Chart(ctxServizi, {
-    type: 'doughnut',
-    data: {
-      labels: ['Pagamenti', 'Telefonia', 'Energia', 'Spedizioni', 'Servizi Digitali'],
-      datasets: [{
-        data: [35, 20, 15, 20, 10], // Sostituisci con i dati dal database
-        backgroundColor: [
-          '#007bff',
-          '#28a745',
-          '#ffc107',
-          '#dc3545',
-          '#6c757d'
-        ]
-      }]
-    },
-    options: {
-      responsive: true
-    }
-  });
+      });
+    })
+    .catch(error => console.error('Errore caricamento dati transazioni:', error));
+}
+
+// Funzione per caricare i dati dei servizi dal database
+function loadServiceData() {
+  fetch('api/get_service_data.php')
+    .then(response => response.json())
+    .then(data => {
+      // Grafico servizi
+      var ctxServizi = document.getElementById('serviziChart').getContext('2d');
+      var serviziChart = new Chart(ctxServizi, {
+        type: 'doughnut',
+        data: {
+          labels: data.labels,
+          datasets: [{
+            data: data.data,
+            backgroundColor: [
+              '#007bff',
+              '#28a745',
+              '#ffc107',
+              '#dc3545',
+              '#6c757d'
+            ]
+          }]
+        },
+        options: {
+          responsive: true
+        }
+      });
+    })
+    .catch(error => console.error('Errore caricamento dati servizi:', error));
 }
 
 // Funzione per confermare eliminazione

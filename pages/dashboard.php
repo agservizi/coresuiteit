@@ -12,6 +12,7 @@ try {
 
     $stmt = $conn->query("SELECT SUM(importo) AS incasso_giornaliero FROM pagamenti WHERE DATE(data_creazione) = CURDATE()");
     $incasso_giornaliero = $stmt->fetch(PDO::FETCH_ASSOC)['incasso_giornaliero'];
+    $incasso_giornaliero = $incasso_giornaliero !== null ? $incasso_giornaliero : 0;
 
     $stmt = $conn->query("SELECT COUNT(*) AS nuovi_clienti FROM clienti WHERE DATE(data_registrazione) = CURDATE()");
     $nuovi_clienti = $stmt->fetch(PDO::FETCH_ASSOC)['nuovi_clienti'];
