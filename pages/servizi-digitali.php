@@ -1,4 +1,6 @@
 <?php
+require_once '../includes/functions.php';
+
 // Controllo permessi
 if (!isLoggedIn()) {
     header("Location: login.php");
