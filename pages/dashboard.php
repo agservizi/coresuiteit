@@ -1,3 +1,43 @@
+<?php
+// Controllo permessi
+if (!isLoggedIn()) {
+    header("Location: login.php");
+    exit;
+}
+
+// Query per ottenere le statistiche principali
+try {
+    $stmt = $conn->query("SELECT COUNT(*) AS transazioni_oggi FROM pagamenti WHERE DATE(data_creazione) = CURDATE()");
+    $transazioni_oggi = $stmt->fetch(PDO::FETCH_ASSOC)['transazioni_oggi'];
+
+    $stmt = $conn->query("SELECT SUM(importo) AS incasso_giornaliero FROM pagamenti WHERE DATE(data_creazione) = CURDATE()");
+    $incasso_giornaliero = $stmt->fetch(PDO::FETCH_ASSOC)['incasso_giornaliero'];
+
+    $stmt = $conn->query("SELECT COUNT(*) AS nuovi_clienti FROM clienti WHERE DATE(data_registrazione) = CURDATE()");
+    $nuovi_clienti = $stmt->fetch(PDO::FETCH_ASSOC)['nuovi_clienti'];
+
+    $stmt = $conn->query("SELECT COUNT(*) AS pratiche_in_attesa FROM telefonia WHERE stato = 'In attivazione'");
+    $pratiche_in_attesa = $stmt->fetch(PDO::FETCH_ASSOC)['pratiche_in_attesa'];
+} catch(PDOException $e) {
+    $transazioni_oggi = 0;
+    $incasso_giornaliero = 0;
+    $nuovi_clienti = 0;
+    $pratiche_in_attesa = 0;
+}
+
+// Query per ottenere le ultime transazioni
+try {
+    $stmt = $conn->query("SELECT p.transaction_id, c.nome, c.cognome, p.tipo, p.importo, p.data_creazione, p.stato 
+                          FROM pagamenti p 
+                          LEFT JOIN clienti c ON p.cliente_id = c.id 
+                          ORDER BY p.data_creazione DESC 
+                          LIMIT 5");
+    $ultime_transazioni = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch(PDOException $e) {
+    $ultime_transazioni = [];
+}
+?>
+
 <div class="container-fluid">
     <div class="row">
         <!-- Statistiche principali -->
@@ -5,7 +45,7 @@
             <div class="card dashboard-stat bg-info-light">
                 <div class="card-body">
                     <h5 class="card-title text-primary">Transazioni oggi</h5>
-                    <h2 class="display-4 font-weight-bold">24</h2>
+                    <h2 class="display-4 font-weight-bold"><?php echo $transazioni_oggi; ?></h2>
                     <p class="card-text"><i class="fas fa-arrow-up text-success"></i> +12% rispetto a ieri</p>
                 </div>
             </div>
@@ -14,7 +54,7 @@
             <div class="card dashboard-stat bg-success-light">
                 <div class="card-body">
                     <h5 class="card-title text-success">Incasso giornaliero</h5>
-                    <h2 class="display-4 font-weight-bold">€1.254</h2>
+                    <h2 class="display-4 font-weight-bold">€<?php echo number_format($incasso_giornaliero, 2, ',', '.'); ?></h2>
                     <p class="card-text"><i class="fas fa-arrow-up text-success"></i> +5% rispetto a ieri</p>
                 </div>
             </div>
@@ -23,7 +63,7 @@
             <div class="card dashboard-stat bg-warning-light">
                 <div class="card-body">
                     <h5 class="card-title text-warning">Nuovi clienti</h5>
-                    <h2 class="display-4 font-weight-bold">7</h2>
+                    <h2 class="display-4 font-weight-bold"><?php echo $nuovi_clienti; ?></h2>
                     <p class="card-text"><i class="fas fa-arrow-up text-success"></i> +2 rispetto a ieri</p>
                 </div>
             </div>
@@ -32,7 +72,7 @@
             <div class="card dashboard-stat bg-danger-light">
                 <div class="card-body">
                     <h5 class="card-title text-danger">Pratiche in attesa</h5>
-                    <h2 class="display-4 font-weight-bold">12</h2>
+                    <h2 class="display-4 font-weight-bold"><?php echo $pratiche_in_attesa; ?></h2>
                     <p class="card-text"><i class="fas fa-arrow-down text-danger"></i> -3 rispetto a ieri</p>
                 </div>
             </div>
@@ -90,46 +130,33 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>TR2023080001</td>
-                                    <td>Mario Rossi</td>
-                                    <td>Bollettino Postale</td>
-                                    <td>€78,50</td>
-                                    <td>Oggi 14:30</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                                <tr>
-                                    <td>TR2023080002</td>
-                                    <td>Giuseppe Verdi</td>
-                                    <td>F24</td>
-                                    <td>€256,00</td>
-                                    <td>Oggi 12:15</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                                <tr>
-                                    <td>TR2023080003</td>
-                                    <td>Anna Bianchi</td>
-                                    <td>Attivazione Fastweb</td>
-                                    <td>€35,00</td>
-                                    <td>Oggi 10:22</td>
-                                    <td><span class="badge bg-warning">In elaborazione</span></td>
-                                </tr>
-                                <tr>
-                                    <td>TR2023080004</td>
-                                    <td>Lucia Neri</td>
-                                    <td>Bonifico</td>
-                                    <td>€320,00</td>
-                                    <td>Oggi 09:47</td>
-                                    <td><span class="badge bg-success">Completato</span></td>
-                                </tr>
-                                <tr>
-                                    <td>TR2023080005</td>
-                                    <td>Roberto Ferrari</td>
-                                    <td>Spedizione Internazionale</td>
-                                    <td>€45,70</td>
-                                    <td>Ieri 16:30</td>
-                                    <td><span class="badge bg-info">Spedito</span></td>
-                                </tr>
+                                <?php if (empty($ultime_transazioni)): ?>
+                                    <tr>
+                                        <td colspan="6" class="text-center">Nessuna transazione trovata</td>
+                                    </tr>
+                                <?php else: ?>
+                                    <?php foreach ($ultime_transazioni as $transazione): ?>
+                                        <tr>
+                                            <td><?php echo $transazione['transaction_id']; ?></td>
+                                            <td><?php echo $transazione['cognome'] . ' ' . $transazione['nome']; ?></td>
+                                            <td><?php echo $transazione['tipo']; ?></td>
+                                            <td>€<?php echo number_format($transazione['importo'], 2, ',', '.'); ?></td>
+                                            <td><?php echo formatDate($transazione['data_creazione']); ?></td>
+                                            <td>
+                                                <?php 
+                                                $badge_class = '';
+                                                switch($transazione['stato']) {
+                                                    case 'Completato': $badge_class = 'bg-success'; break;
+                                                    case 'In elaborazione': $badge_class = 'bg-warning'; break;
+                                                    case 'Annullato': $badge_class = 'bg-danger'; break;
+                                                    default: $badge_class = 'bg-secondary';
+                                                }
+                                                ?>
+                                                <span class="badge <?php echo $badge_class; ?>"><?php echo $transazione['stato']; ?></span>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
                             </tbody>
                         </table>
                     </div>

@@ -26,7 +26,7 @@ function initCharts() {
       labels: ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'],
       datasets: [{
         label: 'Transazioni',
-        data: [12, 19, 3, 5, 10, 3, 7],
+        data: [12, 19, 3, 5, 10, 3, 7], // Sostituisci con i dati dal database
         borderColor: '#007bff',
         backgroundColor: 'rgba(0, 123, 255, 0.1)',
         borderWidth: 2,
@@ -50,7 +50,7 @@ function initCharts() {
     data: {
       labels: ['Pagamenti', 'Telefonia', 'Energia', 'Spedizioni', 'Servizi Digitali'],
       datasets: [{
-        data: [35, 20, 15, 20, 10],
+        data: [35, 20, 15, 20, 10], // Sostituisci con i dati dal database
         backgroundColor: [
           '#007bff',
           '#28a745',
