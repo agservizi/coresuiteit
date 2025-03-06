@@ -1,9 +1,9 @@
 <?php
 // Configurazioni del Database
-define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASS', '');
-define('DB_NAME', 'agenzia_servizi');
+define('DB_HOST', '127.0.0.1:3306');
+define('DB_USER', 'u427445037_coresuite'); // Cambia 'root' con il nome utente corretto
+define('DB_PASS', 'Giogiu2123@'); // Inserisci la password corretta
+define('DB_NAME', 'u427445037_coresuite');
 
 // Connessione al Database
 try {
