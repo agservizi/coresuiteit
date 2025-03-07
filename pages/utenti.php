@@ -1,6 +1,4 @@
 <?php
-require_once BASE_PATH . 'includes/functions.php';
-
 // Controllo permessi
 if (!isLoggedIn() || !hasRole('admin')) {
     header("Location: login.php");
