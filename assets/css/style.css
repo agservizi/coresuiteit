@@ -61,7 +61,7 @@ body {
 
 /* Logo styling */
 .sidebar-logo {
-  max-width: 65%;
+  max-width: auto;
   height: auto;
   margin: 1.5rem auto;
   padding: 0;
