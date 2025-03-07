@@ -16,7 +16,7 @@
             <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse">
                 <div class="position-sticky pt-3">
                     <div class="text-center mb-4">
-                        <img src="assets/img/logo.png" alt="Agenzia Servizi" class="img-fluid">
+                        <img src="assets/img/logo.png" alt="Agenzia Servizi" class="img-fluid sidebar-logo">
                     </div>
                     <ul class="nav flex-column">
                         <li class="nav-item">
