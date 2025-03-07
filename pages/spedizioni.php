@@ -74,185 +74,199 @@ try {
 }
 ?>
 
-<div class="container-fluid">
+<div class="container mx-auto px-4">
     <?php if (!empty($success_message)): ?>
-        <?php echo showAlert($success_message, 'success'); ?>
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+            <span class="block sm:inline"><?php echo $success_message; ?></span>
+        </div>
     <?php endif; ?>
     
     <?php if (!empty($error_message)): ?>
-        <?php echo showAlert($error_message, 'danger'); ?>
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+            <span class="block sm:inline"><?php echo $error_message; ?></span>
+        </div>
     <?php endif; ?>
     
-    <div class="row mb-4">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Nuova Spedizione</h5>
-                    <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#formNuovaSpedizione">
-                        <i class="fas fa-plus me-1"></i> Aggiungi
+    <!-- Card per nuova spedizione -->
+    <div class="mb-6 bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="flex justify-between items-center px-6 py-4 bg-gray-50 border-b">
+            <h3 class="text-lg font-semibold text-gray-800">Nuova Spedizione</h3>
+            <button type="button" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded text-sm flex items-center" 
+                    onclick="toggleForm('formNuovaSpedizione')">
+                <i class="fas fa-plus mr-2"></i> Aggiungi
+            </button>
+        </div>
+        
+        <div id="formNuovaSpedizione" class="hidden p-6">
+            <form method="post" action="" class="space-y-4">
+                <input type="hidden" name="action" value="add">
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label for="cliente_id" class="block text-sm font-medium text-gray-700 mb-1">Cliente Mittente <span class="text-red-500">*</span></label>
+                        <select id="cliente_id" name="cliente_id" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
+                            <option value="">-- Seleziona Cliente --</option>
+                            <?php foreach ($clienti as $cliente): ?>
+                                <option value="<?php echo $cliente['id']; ?>">
+                                    <?php echo $cliente['cognome'] . ' ' . $cliente['nome']; ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label for="tipo_spedizione" class="block text-sm font-medium text-gray-700 mb-1">Tipo Spedizione <span class="text-red-500">*</span></label>
+                        <select id="tipo_spedizione" name="tipo_spedizione" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
+                            <option value="">-- Seleziona --</option>
+                            <option value="Nazionale">Nazionale</option>
+                            <option value="Internazionale">Internazionale</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label for="peso" class="block text-sm font-medium text-gray-700 mb-1">Peso (kg) <span class="text-red-500">*</span></label>
+                        <input type="number" id="peso" name="peso" step="0.01" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="destinatario_nome" class="block text-sm font-medium text-gray-700 mb-1">Nome Destinatario <span class="text-red-500">*</span></label>
+                        <input type="text" id="destinatario_nome" name="destinatario_nome" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
+                    </div>
+                    
+                    <div>
+                        <label for="destinazione_indirizzo" class="block text-sm font-medium text-gray-700 mb-1">Indirizzo Destinazione <span class="text-red-500">*</span></label>
+                        <input type="text" id="destinazione_indirizzo" name="destinazione_indirizzo" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label for="destinazione_citta" class="block text-sm font-medium text-gray-700 mb-1">Città Destinazione <span class="text-red-500">*</span></label>
+                        <input type="text" id="destinazione_citta" name="destinazione_citta" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
+                    </div>
+                    
+                    <div>
+                        <label for="destinazione_cap" class="block text-sm font-medium text-gray-700 mb-1">CAP Destinazione <span class="text-red-500">*</span></label>
+                        <input type="text" id="destinazione_cap" name="destinazione_cap" maxlength="5" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
+                    </div>
+                    
+                    <div>
+                        <label for="destinazione_paese" class="block text-sm font-medium text-gray-700 mb-1">Paese Destinazione <span class="text-red-500">*</span></label>
+                        <input type="text" id="destinazione_paese" name="destinazione_paese" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="importo" class="block text-sm font-medium text-gray-700 mb-1">Importo (€) <span class="text-red-500">*</span></label>
+                        <input type="number" id="importo" name="importo" step="0.01" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
+                    </div>
+                    
+                    <div>
+                        <label for="note" class="block text-sm font-medium text-gray-700 mb-1">Note</label>
+                        <textarea id="note" name="note" rows="3" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"></textarea>
+                    </div>
+                </div>
+                
+                <div class="flex justify-end">
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded">
+                        Registra Spedizione
                     </button>
                 </div>
-                <div class="card-body collapse" id="formNuovaSpedizione">
-                    <form method="post" action="">
-                        <input type="hidden" name="action" value="add">
-                        
-                        <div class="row">
-                            <div class="col-md-4 mb-3">
-                                <label for="cliente_id" class="form-label form-required">Cliente Mittente</label>
-                                <select class="form-select" id="cliente_id" name="cliente_id" required>
-                                    <option value="">-- Seleziona Cliente --</option>
-                                    <?php foreach ($clienti as $cliente): ?>
-                                        <option value="<?php echo $cliente['id']; ?>">
-                                            <?php echo $cliente['cognome'] . ' ' . $cliente['nome']; ?>
-                                        </option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                            
-                            <div class="col-md-4 mb-3">
-                                <label for="tipo_spedizione" class="form-label form-required">Tipo Spedizione</label>
-                                <select class="form-select" id="tipo_spedizione" name="tipo_spedizione" required>
-                                    <option value="">-- Seleziona --</option>
-                                    <option value="Nazionale">Nazionale</option>
-                                    <option value="Internazionale">Internazionale</option>
-                                </select>
-                            </div>
-                            
-                            <div class="col-md-4 mb-3">
-                                <label for="peso" class="form-label form-required">Peso (kg)</label>
-                                <input type="number" class="form-control" id="peso" name="peso" step="0.01" required>
-                            </div>
-                        </div>
-                        
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="destinatario_nome" class="form-label form-required">Nome Destinatario</label>
-                                <input type="text" class="form-control" id="destinatario_nome" name="destinatario_nome" required>
-                            </div>
-                            
-                            <div class="col-md-6 mb-3">
-                                <label for="destinazione_indirizzo" class="form-label form-required">Indirizzo Destinazione</label>
-                                <input type="text" class="form-control" id="destinazione_indirizzo" name="destinazione_indirizzo" required>
-                            </div>
-                        </div>
-                        
-                        <div class="row">
-                            <div class="col-md-4 mb-3">
-                                <label for="destinazione_citta" class="form-label form-required">Città Destinazione</label>
-                                <input type="text" class="form-control" id="destinazione_citta" name="destinazione_citta" required>
-                            </div>
-                            
-                            <div class="col-md-4 mb-3">
-                                <label for="destinazione_cap" class="form-label form-required">CAP Destinazione</label>
-                                <input type="text" class="form-control" id="destinazione_cap" name="destinazione_cap" maxlength="5" required>
-                            </div>
-                            
-                            <div class="col-md-4 mb-3">
-                                <label for="destinazione_paese" class="form-label form-required">Paese Destinazione</label>
-                                <input type="text" class="form-control" id="destinazione_paese" name="destinazione_paese" required>
-                            </div>
-                        </div>
-                        
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="importo" class="form-label form-required">Importo (€)</label>
-                                <input type="number" class="form-control" id="importo" name="importo" step="0.01" required>
-                            </div>
-                            
-                            <div class="col-md-6 mb-3">
-                                <label for="note" class="form-label">Note</label>
-                                <textarea class="form-control" id="note" name="note" rows="3"></textarea>
-                            </div>
-                        </div>
-                        
-                        <button type="submit" class="btn btn-primary">Registra Spedizione</button>
-                    </form>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
     
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Lista Spedizioni</h5>
-                    <div>
-                        <button class="btn btn-sm btn-outline-secondary me-1">
-                            <i class="fas fa-filter me-1"></i> Filtra
-                        </button>
-                        <button class="btn btn-sm btn-outline-secondary">
-                            <i class="fas fa-download me-1"></i> Esporta
-                        </button>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Cliente</th>
-                                    <th>Tipo</th>
-                                    <th>Peso</th>
-                                    <th>Tracking Number</th>
-                                    <th>Destinatario</th>
-                                    <th>Destinazione</th>
-                                    <th>Importo</th>
-                                    <th>Stato</th>
-                                    <th>Data Spedizione</th>
-                                    <th>Azioni</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php if (empty($spedizioni)): ?>
-                                    <tr>
-                                        <td colspan="11" class="text-center">Nessuna spedizione trovata</td>
-                                    </tr>
-                                <?php else: ?>
-                                    <?php foreach ($spedizioni as $spedizione): ?>
-                                        <tr>
-                                            <td><?php echo $spedizione['id']; ?></td>
-                                            <td><?php echo $spedizione['cognome'] . ' ' . $spedizione['nome']; ?></td>
-                                            <td><?php echo $spedizione['tipo']; ?></td>
-                                            <td><?php echo number_format($spedizione['peso'], 2, ',', '.'); ?> kg</td>
-                                            <td><?php echo $spedizione['tracking_number']; ?></td>
-                                            <td><?php echo $spedizione['destinatario_nome']; ?></td>
-                                            <td><?php echo $spedizione['destinazione_indirizzo'] . ', ' . $spedizione['destinazione_citta'] . ', ' . $spedizione['destinazione_paese']; ?></td>
-                                            <td>€<?php echo number_format($spedizione['importo'], 2, ',', '.'); ?></td>
-                                            <td>
-                                                <?php 
-                                                $badge_class = '';
-                                                switch($spedizione['stato']) {
-                                                    case 'In lavorazione': $badge_class = 'bg-warning'; break;
-                                                    case 'Spedito': $badge_class = 'bg-info'; break;
-                                                    case 'Consegnato': $badge_class = 'bg-success'; break;
-                                                    case 'Annullato': $badge_class = 'bg-danger'; break;
-                                                    default: $badge_class = 'bg-secondary';
-                                                }
-                                                ?>
-                                                <span class="badge <?php echo $badge_class; ?>"><?php echo $spedizione['stato']; ?></span>
-                                            </td>
-                                            <td><?php echo formatDate($spedizione['data_spedizione']); ?></td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-primary" title="Visualizza">
-                                                    <i class="fas fa-eye"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-outline-secondary" title="Modifica">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-outline-danger" title="Elimina" onclick="return confirmDelete(<?php echo $spedizione['id']; ?>, 'spedizione')">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+    <!-- Card per lista spedizioni -->
+    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="flex justify-between items-center px-6 py-4 bg-gray-50 border-b">
+            <h3 class="text-lg font-semibold text-gray-800">Lista Spedizioni</h3>
+            <div class="flex space-x-2">
+                <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 py-2 px-4 rounded text-sm flex items-center">
+                    <i class="fas fa-filter mr-2"></i> Filtra
+                </button>
+                <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 py-2 px-4 rounded text-sm flex items-center">
+                    <i class="fas fa-download mr-2"></i> Esporta
+                </button>
             </div>
+        </div>
+        
+        <div class="overflow-x-auto">
+            <table class="w-full">
+                <thead>
+                    <tr class="bg-gray-50">
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cliente</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Peso</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tracking Number</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Destinatario</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Importo</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stato</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Azioni</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    <?php if (empty($spedizioni)): ?>
+                        <tr>
+                            <td colspan="10" class="px-6 py-4 text-center text-sm text-gray-500">Nessuna spedizione trovata</td>
+                        </tr>
+                    <?php else: ?>
+                        <?php foreach ($spedizioni as $spedizione): ?>
+                            <tr>
+                                <td class="px-6 py-4 text-sm text-gray-900"><?php echo $spedizione['id']; ?></td>
+                                <td class="px-6 py-4 text-sm text-gray-900"><?php echo $spedizione['cognome'] . ' ' . $spedizione['nome']; ?></td>
+                                <td class="px-6 py-4 text-sm text-gray-900"><?php echo $spedizione['tipo']; ?></td>
+                                <td class="px-6 py-4 text-sm text-gray-900"><?php echo number_format($spedizione['peso'], 2, ',', '.'); ?> kg</td>
+                                <td class="px-6 py-4 text-sm text-gray-900"><?php echo $spedizione['tracking_number']; ?></td>
+                                <td class="px-6 py-4 text-sm text-gray-900"><?php echo $spedizione['destinatario_nome']; ?></td>
+                                <td class="px-6 py-4 text-sm text-gray-900">€<?php echo number_format($spedizione['importo'], 2, ',', '.'); ?></td>
+                                <td class="px-6 py-4 text-sm text-gray-900">
+                                    <?php 
+                                    $badge_class = '';
+                                    switch($spedizione['stato']) {
+                                        case 'In lavorazione': $badge_class = 'bg-yellow-100 text-yellow-800'; break;
+                                        case 'Spedito': $badge_class = 'bg-blue-100 text-blue-800'; break;
+                                        case 'Consegnato': $badge_class = 'bg-green-100 text-green-800'; break;
+                                        case 'Annullato': $badge_class = 'bg-red-100 text-red-800'; break;
+                                        default: $badge_class = 'bg-gray-100 text-gray-800';
+                                    }
+                                    ?>
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full <?php echo $badge_class; ?>"><?php echo $spedizione['stato']; ?></span>
+                                </td>
+                                <td class="px-6 py-4 text-sm text-gray-900"><?php echo formatDate($spedizione['data_spedizione']); ?></td>
+                                <td class="px-6 py-4 text-sm font-medium">
+                                    <div class="flex space-x-2">
+                                        <button class="text-blue-600 hover:text-blue-900" title="Visualizza">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="text-gray-600 hover:text-gray-900" title="Modifica">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="text-red-600 hover:text-red-900" title="Elimina" onclick="return confirmDelete(<?php echo $spedizione['id']; ?>, 'spedizione')">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
+
+<script>
+function toggleForm(id) {
+    const form = document.getElementById(id);
+    if (form.classList.contains('hidden')) {
+        form.classList.remove('hidden');
+    } else {
+        form.classList.add('hidden');
+    }
+}
+</script>

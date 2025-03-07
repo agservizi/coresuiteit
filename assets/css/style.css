@@ -1,6 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* Base styles */
 body {
   font-family: 'Inter', sans-serif;
-  font-size: .875rem;
+}
+
+/* Hide collapse checkbox */
+.collapse-title > input {
+  display: none;
+}
+
+/* Custom styling for form required fields */
+.form-required::after {
+  content: "*";
+  color: hsl(var(--er));
+  margin-left: 3px;
+}
+
+/* Custom styling for tables */
+.table-compact th, .table-compact td {
+  padding: 0.5rem;
+}
+
+/* Custom animations for alerts */
+.alert {
+  animation: slide-in 0.3s ease-out;
+}
+
+@keyframes slide-in {
+  0% {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Custom transitions */
+.transition-all {
+  transition: all 0.3s ease;
+}
+
+/* Badge customization */
+.badge-outline.badge-success {
+  color: hsl(var(--su));
+  border-color: hsl(var(--su));
+}
+
+.badge-outline.badge-error {
+  color: hsl(var(--er));
+  border-color: hsl(var(--er));
+}
+
+.badge-outline.badge-warning {
+  color: hsl(var(--wa));
+  border-color: hsl(var(--wa));
+}
+
+.badge-outline.badge-info {
+  color: hsl(var(--in));
+  border-color: hsl(var(--in));
+}
+
+/* Stats card customization */
+.stats-card {
+  @apply p-4 rounded-box shadow-md;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--b3));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--b2));
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--bc));
 }
 
 .sidebar {

@@ -33,125 +33,150 @@ try {
 }
 ?>
 
-<div class="container-fluid">
+<div class="container mx-auto">
     <?php if (!empty($success_message)): ?>
-        <?php echo showAlert($success_message, 'success'); ?>
+        <div class="alert alert-success mb-4">
+            <i class="fas fa-check-circle"></i>
+            <span><?php echo $success_message; ?></span>
+        </div>
     <?php endif; ?>
     
     <?php if (!empty($error_message)): ?>
-        <?php echo showAlert($error_message, 'danger'); ?>
+        <div class="alert alert-error mb-4">
+            <i class="fas fa-exclamation-circle"></i>
+            <span><?php echo $error_message; ?></span>
+        </div>
     <?php endif; ?>
     
-    <div class="row mb-4">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Nuovo Utente</h5>
-                    <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#formNuovoUtente">
-                        <i class="fas fa-plus me-1"></i> Aggiungi
-                    </button>
-                </div>
-                <div class="card-body collapse" id="formNuovoUtente">
-                    <form method="post" action="">
-                        <input type="hidden" name="action" value="add">
-                        
-                        <div class="row">
-                            <div class="col-md-4 mb-3">
-                                <label for="nome" class="form-label form-required">Nome</label>
-                                <input type="text" class="form-control" id="nome" name="nome" required>
-                            </div>
-                            
-                            <div class="col-md-4 mb-3">
-                                <label for="cognome" class="form-label form-required">Cognome</label>
-                                <input type="text" class="form-control" id="cognome" name="cognome" required>
-                            </div>
-                            
-                            <div class="col-md-4 mb-3">
-                                <label for="email" class="form-label form-required">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" required>
-                            </div>
-                        </div>
-                        
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="password" class="form-label form-required">Password</label>
-                                <input type="password" class="form-control" id="password" name="password" required>
-                            </div>
-                            
-                            <div class="col-md-6 mb-3">
-                                <label for="ruolo" class="form-label form-required">Ruolo</label>
-                                <select class="form-select" id="ruolo" name="ruolo" required>
-                                    <option value="operatore">Operatore</option>
-                                    <option value="admin">Admin</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <button type="submit" class="btn btn-primary">Registra Utente</button>
-                    </form>
-                </div>
+    <!-- Collapsible for new user -->
+    <div class="collapse bg-base-100 shadow-xl mb-6" id="nuovo-utente">
+        <input type="checkbox" /> 
+        <div class="collapse-title flex justify-between items-center">
+            <h2 class="text-xl font-semibold">Nuovo Utente</h2>
+            <div>
+                <i class="fas fa-chevron-down"></i>
             </div>
+        </div>
+        <div class="collapse-content"> 
+            <form method="post" action="" class="space-y-4">
+                <input type="hidden" name="action" value="add">
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Nome <span class="text-error">*</span></span>
+                        </label>
+                        <input type="text" name="nome" class="input input-bordered w-full" required>
+                    </div>
+                    
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Cognome <span class="text-error">*</span></span>
+                        </label>
+                        <input type="text" name="cognome" class="input input-bordered w-full" required>
+                    </div>
+                    
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Email <span class="text-error">*</span></span>
+                        </label>
+                        <input type="email" name="email" class="input input-bordered w-full" required>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Password <span class="text-error">*</span></span>
+                        </label>
+                        <input type="password" name="password" class="input input-bordered w-full" required>
+                    </div>
+                    
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Ruolo <span class="text-error">*</span></span>
+                        </label>
+                        <select name="ruolo" class="select select-bordered w-full" required>
+                            <option value="operatore">Operatore</option>
+                            <option value="admin">Amministratore</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-control mt-6">
+                    <button type="submit" class="btn btn-primary">Registra Utente</button>
+                </div>
+            </form>
         </div>
     </div>
     
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Lista Utenti</h5>
-                    <div>
-                        <button class="btn btn-sm btn-outline-secondary me-1">
-                            <i class="fas fa-filter me-1"></i> Filtra
-                        </button>
-                        <button class="btn btn-sm btn-outline-secondary">
-                            <i class="fas fa-download me-1"></i> Esporta
-                        </button>
-                    </div>
+    <!-- Card for users list -->
+    <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="card-title">Lista Utenti</h2>
+                <div class="join">
+                    <button class="btn btn-sm btn-outline join-item">
+                        <i class="fas fa-filter mr-2"></i> Filtra
+                    </button>
+                    <button class="btn btn-sm btn-outline join-item">
+                        <i class="fas fa-download mr-2"></i> Esporta
+                    </button>
+                    <button class="btn btn-sm btn-primary join-item" onclick="document.getElementById('nuovo-utente').querySelector('input').checked = true">
+                        <i class="fas fa-plus mr-2"></i> Nuovo
+                    </button>
                 </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped table-hover">
-                            <thead>
+            </div>
+            
+            <div class="overflow-x-auto">
+                <table class="table table-zebra">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Cognome</th>
+                            <th>Email</th>
+                            <th>Ruolo</th>
+                            <th>Azioni</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (empty($utenti)): ?>
+                            <tr>
+                                <td colspan="6" class="text-center">Nessun utente trovato</td>
+                            </tr>
+                        <?php else: ?>
+                            <?php foreach ($utenti as $utente): ?>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Nome</th>
-                                    <th>Cognome</th>
-                                    <th>Email</th>
-                                    <th>Ruolo</th>
-                                    <th>Azioni</th>
+                                    <td><?php echo $utente['id']; ?></td>
+                                    <td><?php echo $utente['nome']; ?></td>
+                                    <td><?php echo $utente['cognome']; ?></td>
+                                    <td><?php echo $utente['email']; ?></td>
+                                    <td>
+                                        <?php if ($utente['ruolo'] == 'admin'): ?>
+                                            <span class="badge badge-primary">Amministratore</span>
+                                        <?php else: ?>
+                                            <span class="badge badge-secondary">Operatore</span>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td>
+                                        <div class="join">
+                                            <button class="btn btn-sm btn-ghost join-item" title="Visualizza">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-ghost join-item" title="Modifica">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-ghost join-item text-error" title="Elimina" onclick="return confirmDelete(<?php echo $utente['id']; ?>, 'utente')">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                <?php if (empty($utenti)): ?>
-                                    <tr>
-                                        <td colspan="6" class="text-center">Nessun utente trovato</td>
-                                    </tr>
-                                <?php else: ?>
-                                    <?php foreach ($utenti as $utente): ?>
-                                        <tr>
-                                            <td><?php echo $utente['id']; ?></td>
-                                            <td><?php echo $utente['nome']; ?></td>
-                                            <td><?php echo $utente['cognome']; ?></td>
-                                            <td><?php echo $utente['email']; ?></td>
-                                            <td><?php echo ucfirst($utente['ruolo']); ?></td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-primary" title="Visualizza">
-                                                    <i class="fas fa-eye"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-outline-secondary" title="Modifica">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-outline-danger" title="Elimina" onclick="return confirmDelete(<?php echo $utente['id']; ?>, 'utente')">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

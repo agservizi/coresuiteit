@@ -54,151 +54,167 @@ try {
 }
 ?>
 
-<div class="container-fluid">
+<div class="container mx-auto px-4">
     <?php if (!empty($success_message)): ?>
-        <?php echo showAlert($success_message, 'success'); ?>
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+            <span class="block sm:inline"><?php echo $success_message; ?></span>
+        </div>
     <?php endif; ?>
     
     <?php if (!empty($error_message)): ?>
-        <?php echo showAlert($error_message, 'danger'); ?>
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+            <span class="block sm:inline"><?php echo $error_message; ?></span>
+        </div>
     <?php endif; ?>
     
-    <div class="row mb-4">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Nuovo Cliente</h5>
-                    <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#formNuovoCliente">
-                        <i class="fas fa-plus me-1"></i> Aggiungi
+    <!-- Card per nuovo cliente -->
+    <div class="mb-6 bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="flex justify-between items-center px-6 py-4 bg-gray-50 border-b">
+            <h3 class="text-lg font-semibold text-gray-800">Nuovo Cliente</h3>
+            <button type="button" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded text-sm flex items-center" 
+                    onclick="toggleForm('formNuovoCliente')">
+                <i class="fas fa-plus mr-2"></i> Aggiungi
+            </button>
+        </div>
+        
+        <div id="formNuovoCliente" class="hidden p-6">
+            <form method="post" action="" class="space-y-4">
+                <input type="hidden" name="action" value="add">
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label for="nome" class="block text-sm font-medium text-gray-700 mb-1">Nome <span class="text-red-500">*</span></label>
+                        <input type="text" id="nome" name="nome" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
+                    </div>
+                    
+                    <div>
+                        <label for="cognome" class="block text-sm font-medium text-gray-700 mb-1">Cognome <span class="text-red-500">*</span></label>
+                        <input type="text" id="cognome" name="cognome" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
+                    </div>
+                    
+                    <div>
+                        <label for="codice_fiscale" class="block text-sm font-medium text-gray-700 mb-1">Codice Fiscale</label>
+                        <input type="text" id="codice_fiscale" name="codice_fiscale" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                        <input type="email" id="email" name="email" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                    </div>
+                    
+                    <div>
+                        <label for="telefono" class="block text-sm font-medium text-gray-700 mb-1">Telefono <span class="text-red-500">*</span></label>
+                        <input type="tel" id="telefono" name="telefono" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="md:col-span-2">
+                        <label for="indirizzo" class="block text-sm font-medium text-gray-700 mb-1">Indirizzo</label>
+                        <input type="text" id="indirizzo" name="indirizzo" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                    </div>
+                    
+                    <div>
+                        <label for="citta" class="block text-sm font-medium text-gray-700 mb-1">Città</label>
+                        <input type="text" id="citta" name="citta" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                    </div>
+                    
+                    <div>
+                        <label for="cap" class="block text-sm font-medium text-gray-700 mb-1">CAP</label>
+                        <input type="text" id="cap" name="cap" maxlength="5" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                    </div>
+                </div>
+                
+                <div>
+                    <label for="note" class="block text-sm font-medium text-gray-700 mb-1">Note</label>
+                    <textarea id="note" name="note" rows="3" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"></textarea>
+                </div>
+                
+                <div class="flex justify-end">
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded">
+                        Registra Cliente
                     </button>
                 </div>
-                <div class="card-body collapse" id="formNuovoCliente">
-                    <form method="post" action="">
-                        <input type="hidden" name="action" value="add">
-                        
-                        <div class="row">
-                            <div class="col-md-4 mb-3">
-                                <label for="nome" class="form-label form-required">Nome</label>
-                                <input type="text" class="form-control" id="nome" name="nome" required>
-                            </div>
-                            
-                            <div class="col-md-4 mb-3">
-                                <label for="cognome" class="form-label form-required">Cognome</label>
-                                <input type="text" class="form-control" id="cognome" name="cognome" required>
-                            </div>
-                            
-                            <div class="col-md-4 mb-3">
-                                <label for="codice_fiscale" class="form-label">Codice Fiscale</label>
-                                <input type="text" class="form-control" id="codice_fiscale" name="codice_fiscale">
-                            </div>
-                        </div>
-                        
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" name="email">
-                            </div>
-                            
-                            <div class="col-md-6 mb-3">
-                                <label for="telefono" class="form-label form-required">Telefono</label>
-                                <input type="tel" class="form-control" id="telefono" name="telefono" required>
-                            </div>
-                        </div>
-                        
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="indirizzo" class="form-label">Indirizzo</label>
-                                <input type="text" class="form-control" id="indirizzo" name="indirizzo">
-                            </div>
-                            
-                            <div class="col-md-4 mb-3">
-                                <label for="citta" class="form-label">Città</label>
-                                <input type="text" class="form-control" id="citta" name="citta">
-                            </div>
-                            
-                            <div class="col-md-2 mb-3">
-                                <label for="cap" class="form-label">CAP</label>
-                                <input type="text" class="form-control" id="cap" name="cap" maxlength="5">
-                            </div>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="note" class="form-label">Note</label>
-                            <textarea class="form-control" id="note" name="note" rows="3"></textarea>
-                        </div>
-                        
-                        <button type="submit" class="btn btn-primary">Registra Cliente</button>
-                    </form>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
     
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Lista Clienti</h5>
-                    <div>
-                        <button class="btn btn-sm btn-outline-secondary me-1">
-                            <i class="fas fa-filter me-1"></i> Filtra
-                        </button>
-                        <button class="btn btn-sm btn-outline-secondary">
-                            <i class="fas fa-download me-1"></i> Esporta
-                        </button>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Nome</th>
-                                    <th>Cognome</th>
-                                    <th>Codice Fiscale</th>
-                                    <th>Email</th>
-                                    <th>Telefono</th>
-                                    <th>Città</th>
-                                    <th>Data Registrazione</th>
-                                    <th>Azioni</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php if (empty($clienti)): ?>
-                                    <tr>
-                                        <td colspan="9" class="text-center">Nessun cliente trovato</td>
-                                    </tr>
-                                <?php else: ?>
-                                    <?php foreach ($clienti as $cliente): ?>
-                                        <tr>
-                                            <td><?php echo $cliente['id']; ?></td>
-                                            <td><?php echo $cliente['nome']; ?></td>
-                                            <td><?php echo $cliente['cognome']; ?></td>
-                                            <td><?php echo $cliente['codice_fiscale']; ?></td>
-                                            <td><?php echo $cliente['email']; ?></td>
-                                            <td><?php echo $cliente['telefono']; ?></td>
-                                            <td><?php echo $cliente['citta']; ?></td>
-                                            <td><?php echo formatDate($cliente['data_registrazione']); ?></td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-primary" title="Visualizza">
-                                                    <i class="fas fa-eye"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-outline-secondary" title="Modifica">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-outline-danger" title="Elimina" onclick="return confirmDelete(<?php echo $cliente['id']; ?>, 'cliente')">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+    <!-- Card per lista clienti -->
+    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="flex justify-between items-center px-6 py-4 bg-gray-50 border-b">
+            <h3 class="text-lg font-semibold text-gray-800">Lista Clienti</h3>
+            <div class="flex space-x-2">
+                <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 py-2 px-4 rounded text-sm flex items-center">
+                    <i class="fas fa-filter mr-2"></i> Filtra
+                </button>
+                <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 py-2 px-4 rounded text-sm flex items-center">
+                    <i class="fas fa-download mr-2"></i> Esporta
+                </button>
             </div>
+        </div>
+        
+        <div class="overflow-x-auto">
+            <table class="w-full">
+                <thead>
+                    <tr class="bg-gray-50">
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nome</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cognome</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Codice Fiscale</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Telefono</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Città</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data Registrazione</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Azioni</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    <?php if (empty($clienti)): ?>
+                        <tr>
+                            <td colspan="9" class="px-6 py-4 text-center text-sm text-gray-500">Nessun cliente trovato</td>
+                        </tr>
+                    <?php else: ?>
+                        <?php foreach ($clienti as $cliente): ?>
+                            <tr>
+                                <td class="px-6 py-4 text-sm text-gray-900"><?php echo $cliente['id']; ?></td>
+                                <td class="px-6 py-4 text-sm text-gray-900"><?php echo $cliente['nome']; ?></td>
+                                <td class="px-6 py-4 text-sm text-gray-900"><?php echo $cliente['cognome']; ?></td>
+                                <td class="px-6 py-4 text-sm text-gray-900"><?php echo $cliente['codice_fiscale']; ?></td>
+                                <td class="px-6 py-4 text-sm text-gray-900"><?php echo $cliente['email']; ?></td>
+                                <td class="px-6 py-4 text-sm text-gray-900"><?php echo $cliente['telefono']; ?></td>
+                                <td class="px-6 py-4 text-sm text-gray-900"><?php echo $cliente['citta']; ?></td>
+                                <td class="px-6 py-4 text-sm text-gray-900"><?php echo formatDate($cliente['data_registrazione']); ?></td>
+                                <td class="px-6 py-4 text-sm font-medium">
+                                    <div class="flex space-x-2">
+                                        <button class="text-blue-600 hover:text-blue-900" title="Visualizza">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="text-gray-600 hover:text-gray-900" title="Modifica">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="text-red-600 hover:text-red-900" title="Elimina" onclick="return confirmDelete(<?php echo $cliente['id']; ?>, 'cliente')">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
+
+<script>
+function toggleForm(id) {
+    const form = document.getElementById(id);
+    if (form.classList.contains('hidden')) {
+        form.classList.remove('hidden');
+    } else {
+        form.classList.add('hidden');
+    }
+}
+</script>

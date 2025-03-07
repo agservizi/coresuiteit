@@ -27,50 +27,72 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <!DOCTYPE html>
-<html lang="it">
+<html lang="it" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - <?php echo SITE_NAME; ?></title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@4.0.0/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.0.0/dist/full.min.css" rel="stylesheet">
     <link href="assets/css/style.css" rel="stylesheet">
 </head>
-<body class="bg-gray-100">
-    <div class="min-h-screen flex items-center justify-center">
-        <div class="max-w-md w-full bg-white shadow-lg rounded-lg p-8">
-            <div class="text-center mb-6">
-                <img src="assets/img/logo.png" alt="Agenzia Servizi" class="mx-auto w-24 h-24">
-                <h1 class="text-2xl font-bold mt-4">Agenzia Servizi</h1>
-            </div>
-            
-            <?php if (!empty($error_message)): ?>
-                <div class="bg-red-100 text-red-700 p-4 rounded mb-4">
-                    <?php echo $error_message; ?>
-                </div>
-            <?php endif; ?>
-            
-            <form method="post" action="">
-                <div class="mb-4">
-                    <label for="email" class="block text-gray-700">Email</label>
-                    <input type="email" class="w-full px-3 py-2 border rounded" id="email" name="email" required>
-                </div>
-                <div class="mb-6">
-                    <label for="password" class="block text-gray-700">Password</label>
-                    <input type="password" class="w-full px-3 py-2 border rounded" id="password" name="password" required>
-                </div>
-                <div class="flex items-center justify-between mb-4">
-                    <div class="flex items-center">
-                        <input type="checkbox" id="remember" name="remember" class="h-4 w-4 text-blue-600">
-                        <label for="remember" class="ml-2 text-gray-700">Ricordami</label>
+<body>
+    <div class="hero min-h-screen bg-base-200">
+        <div class="hero-content flex-col">
+            <div class="card w-full max-w-md shadow-2xl bg-base-100">
+                <div class="card-body">
+                    <div class="text-center mb-6">
+                        <img src="assets/img/logo.png" alt="Agenzia Servizi" class="mx-auto w-24 h-24">
+                        <h1 class="text-2xl font-bold mt-4">Agenzia Servizi</h1>
                     </div>
-                    <a href="#" class="text-blue-600 hover:underline">Password dimenticata?</a>
+                    
+                    <?php if (!empty($error_message)): ?>
+                        <div class="alert alert-error mb-4">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <span><?php echo $error_message; ?></span>
+                        </div>
+                    <?php endif; ?>
+                    
+                    <form method="post" action="">
+                        <div class="form-control">
+                            <label class="label">
+                                <span class="label-text">Email</span>
+                            </label>
+                            <input type="email" id="email" name="email" class="input input-bordered" required>
+                        </div>
+                        <div class="form-control">
+                            <label class="label">
+                                <span class="label-text">Password</span>
+                            </label>
+                            <input type="password" id="password" name="password" class="input input-bordered" required>
+                            <label class="label">
+                                <a href="#" class="label-text-alt link">Password dimenticata?</a>
+                            </label>
+                        </div>
+                        <div class="form-control mt-4">
+                            <label class="cursor-pointer label justify-start">
+                                <input type="checkbox" id="remember" name="remember" class="checkbox checkbox-sm mr-2">
+                                <span class="label-text">Ricordami</span>
+                            </label>
+                        </div>
+                        <div class="form-control mt-6">
+                            <button type="submit" class="btn btn-primary">Accedi</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="mb-4">
-                    <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Accedi</button>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
+
+    <script>
+        // Check for saved theme preference
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                document.querySelector('html').setAttribute('data-theme', savedTheme);
+            }
+        });
+    </script>
 </body>
 </html>
