@@ -1,15 +1,5 @@
-// Script per inizializzare tooltip e popover di Bootstrap
+// Script per inizializzare tooltip e popover di Tailwind CSS
 document.addEventListener('DOMContentLoaded', function() {
-  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-  tooltipTriggerList.map(function (tooltipTriggerEl) {
-    return new bootstrap.Tooltip(tooltipTriggerEl);
-  });
-  
-  var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
-  popoverTriggerList.map(function (popoverTriggerEl) {
-    return new bootstrap.Popover(popoverTriggerEl);
-  });
-  
   // Inizializza i chart nella dashboard se esistono
   if (document.getElementById('transazioniChart')) {
     initCharts();
@@ -27,8 +17,8 @@ function initCharts() {
       datasets: [{
         label: 'Transazioni',
         data: [12, 19, 3, 5, 10, 3, 7],
-        borderColor: '#007bff',
-        backgroundColor: 'rgba(0, 123, 255, 0.1)',
+        borderColor: '#3b82f6',
+        backgroundColor: 'rgba(59, 130, 246, 0.1)',
         borderWidth: 2,
         fill: true
       }]
@@ -52,11 +42,11 @@ function initCharts() {
       datasets: [{
         data: [35, 20, 15, 20, 10],
         backgroundColor: [
-          '#007bff',
-          '#28a745',
-          '#ffc107',
-          '#dc3545',
-          '#6c757d'
+          '#3b82f6',
+          '#10b981',
+          '#f59e0b',
+          '#ef4444',
+          '#6b7280'
         ]
       }]
     },
