@@ -163,3 +163,71 @@ main {
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
+
+/* Stili personalizzati */
+:root {
+    --sidebar-width: 250px;
+    --header-height: 60px;
+}
+
+/* Stili per la sidebar */
+#sidebar {
+    background-color: #343a40;
+    color: #fff;
+}
+
+#sidebar .nav-link {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+#sidebar .nav-link:hover {
+    color: #fff;
+}
+
+#sidebar .nav-link.active {
+    color: #fff;
+    font-weight: bold;
+}
+
+/* Stili per il contenuto principale */
+.content-container {
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+/* Personalizzazione card e altri elementi */
+.card {
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.05);
+}
+
+.card-header {
+    background-color: #fff;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+/* Stili per tabelle */
+.table th {
+    font-weight: 600;
+    border-top: none;
+}
+
+/* Elementi di navigazione */
+.breadcrumb {
+    background: transparent;
+    padding-left: 0;
+    margin-bottom: 1rem;
+}
+
+/* Fix colori bottoni e altri elementi UI */
+.btn-primary {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}

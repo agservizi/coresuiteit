@@ -20,6 +20,42 @@ body {
     margin-left: auto;
 }
 
+/* Sidebar fix */
+#sidebar {
+    min-height: 100vh;
+    position: sticky;
+    top: 0;
+    height: 100%;
+    z-index: 100;
+    padding: 0;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    transition: all 0.3s;
+}
+
+#sidebar .nav-link {
+    padding: 10px 15px;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+#sidebar .nav-link:hover {
+    background-color: rgba(255,255,255,0.1);
+}
+
+#sidebar .nav-link.active {
+    background-color: rgba(255,255,255,0.2);
+}
+
+/* Contenuto principale */
+main {
+    padding-top: 10px;
+    padding-bottom: 20px;
+}
+
+.content-container {
+    padding: 15px;
+}
+
 /* Grid system fix */
 .row {
     display: flex;
@@ -28,6 +64,7 @@ body {
     margin-left: -15px;
 }
 
+/* Adattamento colonne */
 .col, .col-1, .col-2, .col-3, .col-4, .col-5, .col-6, 
 .col-7, .col-8, .col-9, .col-10, .col-11, .col-12, 
 .col-sm, .col-md, .col-lg, .col-xl {
@@ -48,6 +85,10 @@ body {
     .container {
         max-width: 720px;
     }
+    
+    #sidebar {
+        display: block !important;
+    }
 }
 
 @media (min-width: 992px) {
@@ -59,6 +100,32 @@ body {
 @media (min-width: 1200px) {
     .container {
         max-width: 1140px;
+    }
+}
+
+/* Mobile fix */
+@media (max-width: 767.98px) {
+    #sidebar {
+        margin-left: -100%;
+        width: 80%;
+        position: fixed;
+        z-index: 1000;
+        height: 100vh;
+        transition: margin-left 0.3s;
+    }
+    
+    #sidebar.show {
+        margin-left: 0;
+    }
+    
+    main {
+        width: 100%;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+    
+    .ms-sm-auto {
+        margin-left: 0 !important;
     }
 }
 
@@ -79,6 +146,25 @@ img {
 /* Fix spaziatura elementi */
 .card, .alert, .panel {
     margin-bottom: 20px;
+}
+
+/* Aggiungi pulsante toggle menu per mobile */
+.navbar-toggler {
+    display: none;
+}
+
+@media (max-width: 767.98px) {
+    .navbar-toggler {
+        display: block;
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        z-index: 1050;
+    }
+    
+    .content-container {
+        padding-top: 60px;
+    }
 }
 
 /* Fix per elementi di navigazione */

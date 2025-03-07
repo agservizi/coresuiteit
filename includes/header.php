@@ -14,7 +14,7 @@
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar -->
-            <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse">
+            <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar">
                 <div class="position-sticky pt-3">
                     <div class="text-center mb-4">
                         <img src="assets/img/logo.png" alt="Agenzia Servizi" class="img-fluid">
@@ -105,6 +105,9 @@
                         </div>
                     </div>
                 </div>
+                
+                <!-- Il contenuto della pagina sarà inserito qui -->
+                <div class="content-container">
 </main>
 </div>
 </div>
