@@ -49,38 +49,15 @@
                         <li class="nav-item">
                             <a class="nav-link" href="../pages/servizi-digitali.php">Servizi Digitali</a>
                         </li>
-                        <?php if (isset($_SESSION['user_id']) && hasRole('admin')): ?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../pages/utenti.php">Utenti</a>
-                        </li>
-                        <?php endif; ?>
-                    </ul>
-                    <ul class="navbar-nav ms-auto">
-                        <?php if (isset($_SESSION['user_id'])): ?>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <?php echo $_SESSION['user_name']; ?>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="../pages/profilo.php">Profilo</a></li>
-                                <li><a class="dropdown-item" href="../pages/impostazioni.php">Impostazioni</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="../logout.php">Logout</a></li>
-                            </ul>
-                        </li>
-                        <?php else: ?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../login.php">Login</a>
-                        </li>
-                        <?php endif; ?>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
+
     <main class="container py-4">
-    <!-- Elemento per il background con effetto Mica -->
-    <div class="win11-mica-bg"></div>
+        <!-- Elemento per il background con effetto Mica -->
+        <div class="win11-mica-bg"></div>
 
     <!-- Desktop Windows 11 -->
     <div class="win11-desktop">

@@ -1,12 +1,14 @@
 <?php
-// Avvia la sessione all'inizio di ogni pagina
-session_start();
+// Avvia la sessione solo se non è già stata avviata
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Configurazione database
-define('DB_HOST', 'localhost');
+define('DB_HOST', 'localhost');  // o l'host del tuo database remoto
 define('DB_NAME', 'u427445037_coresuite');
-define('DB_USER', 'u427445037_coresuite');
-define('DB_PASS', 'password');
+define('DB_USER', 'u427445037_admin');  // Corretto il nome utente
+define('DB_PASS', 'TuaPasswordSicura123!');  // Sostituisci con la password corretta
 
 // Altre configurazioni
 define('SITE_NAME', 'CoreSuite IT');
@@ -29,6 +31,9 @@ try {
     die("Errore di connessione al database: " . $e->getMessage());
 }
 
-// Includi funzioni globali
-require_once __DIR__ . '/../includes/functions.php';
+// Includi funzioni globali se il file esiste
+$functions_path = __DIR__ . '/../includes/functions.php';
+if (file_exists($functions_path)) {
+    require_once $functions_path;
+}
 ?>
