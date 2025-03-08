@@ -1,16 +1,47 @@
 <!DOCTYPE html>
-<html lang="it" data-theme="light">
+<html lang="it" data-theme="<?php echo isset($_COOKIE['theme']) ? $_COOKIE['theme'] : 'light'; ?>">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo SITE_NAME; ?> - Gestionale</title>
-    <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI+Variable:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="assets/css/style.css" rel="stylesheet">
+    <title><?php echo $pageTitle ?? 'CoreSuite IT'; ?></title>
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
+    
+    <!-- Segoe UI Variable font - necessario per Windows 11 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI+Variable:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome - usato per le icone Windows 11 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Windows 11 Styles -->
+    <link rel="stylesheet" href="assets/css/win11.css">
+    <link rel="stylesheet" href="assets/css/win11-components.css">
+    <link rel="stylesheet" href="assets/css/win11-notifications.css">
+    <link rel="stylesheet" href="assets/css/win11-fluent.css">
+    <link rel="stylesheet" href="assets/css/win11-animations.css">
+    <link rel="stylesheet" href="assets/css/win11-explorer.css">
+    <link rel="stylesheet" href="assets/css/win11-settings.css">
+    <link rel="stylesheet" href="assets/css/win11-widgets.css">
+    
+    <!-- CSS originale del sito -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    
+    <?php if(isset($extraCss)): ?>
+        <?php foreach($extraCss as $css): ?>
+            <link rel="stylesheet" href="<?php echo $css; ?>">
+        <?php endforeach; ?>
+    <?php endif; ?>
 </head>
-<body>
+<body class="windows11-environment">
+    <!-- Elemento per il background con effetto Mica -->
+    <div class="win11-mica-bg"></div>
+
+    <!-- Desktop Windows 11 -->
+    <div class="win11-desktop">
+        <?php if(isLoggedIn()): ?>
     <!-- App Window Structure -->
     <div class="app-window">
         <!-- App Title Bar (Windows 11 style) -->

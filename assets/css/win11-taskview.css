@@ -1,0 +1,312 @@
+/**
+ * Windows 11 Task View Styles
+ * Stili per la funzionalità Task View (visualizzazione attività) di Windows 11
+ */
+
+.task-view-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1100;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.task-view-panel.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.task-view-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    z-index: -1;
+}
+
+.task-view-header {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1;
+}
+
+.close-task-view {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+    transition: var(--win11-transition);
+}
+
+.close-task-view:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.virtual-desktops {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.desktop-thumbnails {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.desktop-thumbnail {
+    width: 120px;
+    height: 70px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: var(--win11-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    border: 2px solid transparent;
+    overflow: hidden;
+}
+
+.desktop-thumbnail.active {
+    border-color: var(--win11-accent);
+    background: rgba(0, 120, 212, 0.3);
+}
+
+.desktop-thumbnail:hover:not(.active) {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.desktop-name {
+    text-align: center;
+    font-weight: 500;
+}
+
+.close-desktop {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.desktop-thumbnail:hover .close-desktop {
+    opacity: 1;
+}
+
+.close-desktop:hover {
+    background: rgba(255, 0, 0, 0.8);
+}
+
+.add-desktop {
+    width: 30px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.add-desktop:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+.task-view-content {
+    flex: 1;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 40px 40px;
+}
+
+.window-thumbnails {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    perspective: 1000px;
+}
+
+.window-thumbnail {
+    width: 280px;
+    height: 200px;
+    position: relative;
+    transition: all 0.3s ease;
+    transform: scale(0.95);
+    cursor: pointer;
+}
+
+.window-thumbnail:hover {
+    transform: scale(1) translateY(-5px);
+    z-index: 2;
+}
+
+.window-preview {
+    width: 100%;
+    height: 85%;
+    background: var(--win11-card-bg);
+    border-radius: var(--win11-radius);
+    overflow: hidden;
+    box-shadow: var(--win11-shadow-lg);
+    display: flex;
+    flex-direction: column;
+}
+
+.preview-title-bar {
+    height: 30px;
+    background: var(--win11-surface-1);
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    border-bottom: 1px solid var(--win11-divider);
+    font-size: 12px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: var(--win11-text);
+}
+
+.preview-title-bar i {
+    margin-right: 6px;
+    font-size: 14px;
+}
+
+.preview-content {
+    flex: 1;
+    background: var(--win11-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--win11-text-secondary);
+}
+
+.thumbnail-title {
+    font-size: 12px;
+    color: white;
+    text-align: center;
+    margin-top: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 20px;
+}
+
+.close-window {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(255, 0, 0, 0.8);
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s;
+    font-size: 12px;
+    z-index: 3;
+}
+
+.window-thumbnail:hover .close-window {
+    opacity: 1;
+}
+
+.generic-preview-icon {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.generic-preview-icon i {
+    font-size: 32px;
+    opacity: 0.5;
+}
+
+.no-windows-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.5);
+    padding: 40px;
+    text-align: center;
+}
+
+.no-windows-message i {
+    font-size: 48px;
+    margin-bottom: 20px;
+    opacity: 0.7;
+}
+
+.no-windows-message p {
+    font-size: 16px;
+}
+
+/* Gestione dei desktop virtuali mobili */
+@media (max-width: 768px) {
+    .desktop-thumbnails {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .desktop-thumbnail {
+        width: 80px;
+        height: 50px;
+        font-size: 10px;
+    }
+    
+    .window-thumbnails {
+        padding: 20px;
+    }
+    
+    .window-thumbnail {
+        width: calc(50% - 20px);
+        height: 150px;
+    }
+}

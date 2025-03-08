@@ -1,5 +1,6 @@
 /**
  * CoreSuite IT - Script principale
+ * Aggiornato per integrare il tema Windows 11
  */
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -12,6 +13,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Gestisci il click su elementi collassabili
     handleCollapsibles();
+    
+    // Integrazione con Windows 11
+    setupWindows11Integration();
 });
 
 /**
@@ -300,4 +304,214 @@ function formatCurrency(amount) {
     style: 'currency',
     currency: 'EUR'
   });
+}
+
+/**
+ * Setup integrazione Windows 11
+ */
+function setupWindows11Integration() {
+    // Se una pagina deve essere caricata in una finestra Windows 11
+    const pageContent = document.querySelector('.page-content');
+    if (pageContent) {
+        // Converti il contenuto della pagina in una finestra Windows 11
+        convertToWin11Window(pageContent);
+    }
+    
+    // Converti alert e notifiche in toast Windows 11
+    convertAlertsToWin11Toast();
+    
+    // Converti modali in stile Windows 11
+    enhanceModalsWithWin11Style();
+}
+
+/**
+ * Converte un elemento in una finestra Windows 11
+ * @param {HTMLElement} element - Elemento da convertire
+ */
+function convertToWin11Window(element) {
+    // Ottieni il titolo della pagina
+    const pageTitle = document.title.replace(' - CoreSuite IT', '');
+    
+    // Salva il contenuto originale
+    const originalContent = element.innerHTML;
+    
+    // Crea la struttura della finestra
+    const windowHtml = `
+        <div class="app-title-bar">
+            <div class="app-icon">
+                <i class="fas fa-window-maximize"></i>
+            </div>
+            <h1 class="app-title">${pageTitle}</h1>
+            <div class="win-controls">
+                <button class="win-control-btn minimize" title="Minimizza">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button class="win-control-btn maximize" title="Massimizza">
+                    <i class="fas fa-square"></i>
+                </button>
+                <button class="win-control-btn close" title="Chiudi">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="app-window-content">
+            ${originalContent}
+        </div>
+    `;
+    
+    // Avvolgi il contenuto originale nella finestra Windows 11
+    element.innerHTML = windowHtml;
+    element.classList.add('app-window');
+    
+    // Gestisci gli eventi della finestra (se Win11.windowManager non è stato inizializzato prima)
+    const minimizeBtn = element.querySelector('.win-control-btn.minimize');
+    const maximizeBtn = element.querySelector('.win-control-btn.maximize');
+    const closeBtn = element.querySelector('.win-control-btn.close');
+    
+    if (minimizeBtn) {
+        minimizeBtn.addEventListener('click', () => {
+            element.classList.add('minimizing');
+            setTimeout(() => {
+                element.classList.remove('minimizing');
+            }, 300);
+        });
+    }
+    
+    if (maximizeBtn) {
+        maximizeBtn.addEventListener('click', () => {
+            element.classList.toggle('maximized');
+            const icon = maximizeBtn.querySelector('i');
+            if (element.classList.contains('maximized')) {
+                icon.className = 'fas fa-clone';
+            } else {
+                icon.className = 'fas fa-square';
+            }
+        });
+    }
+    
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                window.location.href = 'dashboard.php';
+            }
+        });
+    }
+    
+    // Rendi la finestra trascinabile tramite la barra del titolo
+    const titleBar = element.querySelector('.app-title-bar');
+    if (titleBar) {
+        makeWindowDraggable(titleBar, element);
+    }
+}
+
+/**
+ * Rende trascinabile una finestra tramite la barra del titolo
+ */
+function makeWindowDraggable(handle, window) {
+    let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+    
+    handle.addEventListener('mousedown', dragMouseDown);
+    
+    function dragMouseDown(e) {
+        // Evita il drag sui controlli della finestra
+        if (e.target.closest('.win-controls')) return;
+        
+        // Evita il drag se la finestra è massimizzata
+        if (window.classList.contains('maximized')) return;
+        
+        e.preventDefault();
+        
+        // Ottieni la posizione iniziale del cursore
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        
+        // Aggiungi classe per stile durante il trascinamento
+        window.classList.add('dragging');
+        
+        // Imposta gli eventi per il trascinamento e il rilascio
+        document.addEventListener('mousemove', elementDrag);
+        document.addEventListener('mouseup', closeDragElement);
+    }
+    
+    function elementDrag(e) {
+        e.preventDefault();
+        
+        // Calcola la nuova posizione del cursore
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        
+        // Imposta la nuova posizione della finestra
+        const top = window.offsetTop - pos2;
+        const left = window.offsetLeft - pos1;
+        
+        window.style.top = top + "px";
+        window.style.left = left + "px";
+    }
+    
+    function closeDragElement() {
+        // Rimuovi classe di trascinamento
+        window.classList.remove('dragging');
+        
+        // Rimuovi gli eventi
+        document.removeEventListener('mousemove', elementDrag);
+        document.removeEventListener('mouseup', closeDragElement);
+    }
+}
+
+/**
+ * Converte gli alert in toast Windows 11
+ */
+function convertAlertsToWin11Toast() {
+    // Cerca alert messages
+    const alertMessages = document.querySelectorAll('.alert');
+    alertMessages.forEach(alert => {
+        let type = 'info';
+        if (alert.classList.contains('alert-success')) type = 'success';
+        if (alert.classList.contains('alert-warning')) type = 'warning';
+        if (alert.classList.contains('alert-danger')) type = 'error';
+        
+        const title = type.charAt(0).toUpperCase() + type.slice(1);
+        const message = alert.textContent.trim();
+        
+        // Nascondi l'alert originale
+        alert.style.display = 'none';
+        
+        // Mostra il toast Windows 11 se la funzione esiste
+        if (typeof Win11 !== 'undefined' && Win11.notifications) {
+            setTimeout(() => {
+                Win11.notifications.showToast({
+                    title: title,
+                    message: message,
+                    type: type,
+                    duration: 5000
+                });
+            }, 200);
+        }
+    });
+}
+
+/**
+ * Migliora i modali con lo stile Windows 11
+ */
+function enhanceModalsWithWin11Style() {
+    // Applica gli stili Windows 11 ai modali Bootstrap
+    const modals = document.querySelectorAll('.modal');
+    modals.forEach(modal => {
+        // Aggiungi classe per effetti fluent
+        modal.querySelector('.modal-content')?.classList.add('win11-fluent-panel');
+        
+        // Stile pulsanti nel modal footer
+        const modalFooter = modal.querySelector('.modal-footer');
+        if (modalFooter) {
+            const primaryBtn = modalFooter.querySelector('.btn-primary');
+            if (primaryBtn) primaryBtn.classList.add('win11-btn', 'win11-btn-primary');
+            
+            const secondaryBtn = modalFooter.querySelector('.btn-secondary');
+            if (secondaryBtn) secondaryBtn.classList.add('win11-btn');
+        }
+    });
 }

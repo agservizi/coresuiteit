@@ -940,3 +940,190 @@ body.dark-theme .win11-btn-outline:hover {
 .win11-fade-in {
   animation: fadeIn 0.3s ease forwards;
 }
+
+/**
+ * CoreSuite IT - Stile principale con Windows 11 theme
+ */
+
+/* Reset stili originali che potrebbero entrare in conflitto */
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI Variable', 'Segoe UI', sans-serif !important;
+    height: 100%;
+    overflow: hidden;
+    background-color: var(--win11-bg);
+    color: var(--win11-text);
+}
+
+/* Layout principale Windows 11 */
+.win11-desktop {
+    width: 100%;
+    height: calc(100vh - var(--win11-taskbar-height));
+    position: relative;
+    overflow: auto;
+}
+
+/* Container principale del contenuto */
+.win11-content-container {
+    padding: 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Stile finestre app per le pagine */
+.app-window {
+    background: var(--win11-mica-bg);
+    backdrop-filter: var(--win11-backdrop-filter);
+    border: 1px solid var(--win11-mica-border);
+    border-radius: var(--win11-radius-lg);
+    box-shadow: var(--win11-shadow-lg);
+    margin: 0 auto;
+    width: 98%;
+    max-width: 1600px;
+    height: calc(100vh - var(--win11-taskbar-height) - 40px);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Sostituzioni stile per elementi di Bootstrap */
+.card {
+    background: var(--win11-card-bg);
+    backdrop-filter: var(--win11-backdrop-filter);
+    border: 1px solid var(--win11-mica-border);
+    border-radius: var(--win11-radius);
+    box-shadow: var(--win11-shadow);
+    transition: var(--win11-transition);
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--win11-shadow-lg);
+}
+
+.btn {
+    border-radius: var(--win11-radius);
+    padding: 8px 16px;
+    font-weight: 500;
+    transition: var(--win11-transition);
+}
+
+.btn-primary {
+    background-color: var(--win11-accent);
+    border-color: var(--win11-accent);
+}
+
+.btn-primary:hover {
+    background-color: var(--win11-accent-dark);
+    border-color: var(--win11-accent-dark);
+}
+
+/* Form controls */
+.form-control {
+    border-radius: var(--win11-radius);
+    padding: 10px 12px;
+    border: 1px solid var(--win11-divider);
+    background-color: var(--win11-surface-1);
+    color: var(--win11-text);
+    transition: var(--win11-transition);
+}
+
+.form-control:focus {
+    border-color: var(--win11-accent);
+    box-shadow: 0 0 0 2px var(--win11-accent-transparent);
+}
+
+/* Adattamenti tabelle */
+.table {
+    color: var(--win11-text);
+    border-color: var(--win11-divider);
+}
+
+.table thead th {
+    border-bottom: 2px solid var(--win11-divider);
+    font-weight: 600;
+}
+
+.table-hover tbody tr:hover {
+    background-color: var(--win11-accent-transparent);
+}
+
+/* User avatar */
+.user-avatar-small {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Menu contestuale personalizzato */
+.custom-context-menu {
+    display: none;
+}
+
+/* Utilizziamo il menu contestuale Windows 11 */
+.win11-context-menu {
+    z-index: 2000;
+}
+
+/* Adattamenti per modali */
+.modal-content {
+    border: none;
+    border-radius: var(--win11-radius-lg);
+    overflow: hidden;
+    background: var(--win11-mica-bg);
+    backdrop-filter: var(--win11-backdrop-filter);
+}
+
+.modal-header {
+    border-bottom-color: var(--win11-divider);
+    padding: 16px;
+}
+
+.modal-footer {
+    border-top-color: var(--win11-divider);
+    padding: 16px;
+}
+
+.modal-title {
+    font-weight: 600;
+    font-size: 18px;
+}
+
+/* Scroll bars in stile Windows 11 */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(128, 128, 128, 0.4);
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(128, 128, 128, 0.5);
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Stile custom per il contenuto responsive */
+@media (max-width: 992px) {
+    .app-window {
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+    }
+    
+    .win11-content-container {
+        padding: 10px;
+    }
+}

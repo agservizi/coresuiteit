@@ -1,0 +1,310 @@
+/**
+ * Windows 11 Lock Screen
+ * Stile per la schermata di blocco e login di Windows 11
+ */
+
+/* Schermata di blocco principale */
+.win11-lock-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+    overflow: hidden;
+}
+
+.win11-lock-screen.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Background e overlay */
+.lock-screen-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../img/win11-lockscreen.jpg') center/cover no-repeat;
+    z-index: -2;
+}
+
+.lock-screen-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0.6) 100%);
+    z-index: -1;
+}
+
+/* Contenitore orario e data */
+.lock-screen-time-container {
+    margin-top: 15vh;
+    text-align: center;
+    color: white;
+    transform: translateY(0);
+    opacity: 1;
+    transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.lock-screen-time-container.fade-up {
+    transform: translateY(-30px);
+    opacity: 0;
+}
+
+.lock-screen-time {
+    font-size: 96px;
+    font-weight: 300;
+    line-height: 1;
+    margin-bottom: 10px;
+}
+
+.lock-screen-date {
+    font-size: 24px;
+    font-weight: 400;
+}
+
+/* Indicatori in basso */
+.lock-screen-notification-area {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    gap: 15px;
+}
+
+.lock-indicator {
+    width: 20px;
+    height: 20px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+/* Schermata di login */
+.login-screen {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+    width: 400px;
+    text-align: center;
+    color: white;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s ease;
+}
+
+.login-screen.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%);
+}
+
+.login-user-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 16px;
+    border: 3px solid white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.login-user-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.login-user-name {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.login-password-field {
+    position: relative;
+    margin: 0 auto 10px;
+    width: 250px;
+}
+
+.login-password-field input {
+    width: 100%;
+    padding: 12px 40px 12px 16px;
+    border-radius: 24px;
+    border: none;
+    background: rgba(255, 255, 255, 0.9);
+    color: #202020;
+    font-size: 15px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.login-password-field input:focus {
+    background: #ffffff;
+    box-shadow: 0 0 0 2px var(--win11-accent);
+}
+
+.login-submit-btn {
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--win11-accent);
+    color: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.login-submit-btn:hover {
+    background: var(--win11-accent-dark);
+}
+
+.login-error-message {
+    color: #ff6b6b;
+    font-size: 13px;
+    margin-bottom: 15px;
+    min-height: 20px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+.login-options {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.login-option {
+    font-size: 13px;
+    opacity: 0.9;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.login-option:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
+.login-option i {
+    margin-right: 5px;
+}
+
+/* Animazione di errore */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+.shake {
+    animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+/* Animazione di sblocco */
+.win11-lock-screen.unlocking {
+    animation: unlocking 0.5s forwards;
+}
+
+@keyframes unlocking {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+
+/* Menu di spegnimento */
+.power-button {
+    cursor: pointer;
+    position: relative;
+}
+
+.power-menu {
+    position: absolute;
+    bottom: 100%;
+    right: 0;
+    width: 180px;
+    background: var(--win11-mica-bg);
+    backdrop-filter: var(--win11-backdrop-filter);
+    border: 1px solid var(--win11-mica-border);
+    border-radius: var(--win11-radius);
+    box-shadow: var(--win11-shadow-lg);
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    overflow: hidden;
+}
+
+.power-menu.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.power-menu-item {
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: var(--win11-text);
+}
+
+.power-menu-item:hover {
+    background-color: var(--win11-surface-1);
+}
+
+.power-menu-item i {
+    width: 20px;
+    margin-right: 10px;
+}
+
+/* Quando il corpo è bloccato */
+body.locked {
+    overflow: hidden;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .lock-screen-time {
+        font-size: 72px;
+    }
+    
+    .lock-screen-date {
+        font-size: 20px;
+    }
+    
+    .login-screen {
+        width: 90%;
+        max-width: 350px;
+    }
+}
