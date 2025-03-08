@@ -17,11 +17,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = sanitizeInput($_POST['email']);
     $password = sanitizeInput($_POST['password']);
     
-    if (loginUser($email, $password)) {
-        header("Location: index.php");
-        exit;
-    } else {
-        $error_message = 'Email o password non validi.';
+    try {
+        $stmt = $conn->prepare("SELECT * FROM utenti WHERE email = :email LIMIT 1");
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+        
+        if ($stmt->rowCount() > 0) {
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            if (password_verify($password, $user['password'])) {
+                // Login riuscito, imposta la sessione
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['user_name'] = $user['nome'] . ' ' . $user['cognome'];
+                $_SESSION['user_email'] = $user['email'];
+                $_SESSION['user_role'] = $user['ruolo'];
+                
+                // Registra l'accesso
+                $stmt = $conn->prepare("UPDATE utenti SET ultimo_accesso = NOW() WHERE id = :id");
+                $stmt->bindParam(':id', $user['id']);
+                $stmt->execute();
+                
+                // Reindirizza alla dashboard
+                header("Location: index.php");
+                exit;
+            } else {
+                $error_message = "Password non corretta. Riprova.";
+            }
+        } else {
+            $error_message = "Nessun account trovato con questa email. Riprova o registrati.";
+        }
+    } catch (PDOException $e) {
+        $error_message = "Si è verificato un errore. Riprova più tardi.";
     }
 }
 ?>

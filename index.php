@@ -6,24 +6,54 @@ require_once 'config/config.php';
 require_once 'includes/auth.php';
 require_once 'includes/functions.php';
 
-// Verifica se l'utente è loggato, altrimenti reindirizza alla pagina di login
-if (!isLoggedIn() && basename($_SERVER['PHP_SELF']) != 'login.php') {
+// Se l'utente non è loggato, reindirizza alla pagina di login
+if (!isLoggedIn() && !in_array(basename($_SERVER['PHP_SELF']), ['login.php', 'register.php'])) {
     header("Location: login.php");
     exit;
 }
 
-// Gestione del routing di base
-$page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
-$allowed_pages = ['dashboard', 'pagamenti', 'telefonia', 'energia', 'spedizioni', 'servizi-digitali', 'clienti', 'utenti', 'fatture'];
+// Imposta il titolo della pagina
+$pageTitle = 'Dashboard - ' . SITE_NAME;
 
-if (in_array($page, $allowed_pages)) {
-    $page_to_load = "pages/{$page}.php";
-} else {
-    $page_to_load = "pages/dashboard.php";
+// Carica la pagina richiesta o la dashboard di default
+$page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
+
+// Lista delle pagine consentite
+$allowed_pages = [
+    'dashboard',
+    'clienti',
+    'pagamenti',
+    'telefonia',
+    'energia',
+    'spedizioni',
+    'fatture',
+    'servizi-digitali',
+    'utenti',
+    'profilo',
+    'impostazioni'
+];
+
+// Verifica che la pagina richiesta sia consentita
+if (!in_array($page, $allowed_pages)) {
+    $page = 'dashboard';
 }
 
-// Include l'header, la pagina richiesta e il footer
-include 'includes/header.php';
-include $page_to_load;
-include 'includes/footer.php';
+// Verifica permessi per le pagine riservate agli admin
+if ($page === 'utenti' && !hasRole('admin')) {
+    $page = 'dashboard';
+}
+
+// Include l'header
+require_once 'includes/header.php';
+
+// Include la pagina richiesta
+$page_path = 'pages/' . $page . '.php';
+if (file_exists($page_path)) {
+    include($page_path);
+} else {
+    echo "<div class='alert alert-danger'>La pagina richiesta non esiste.</div>";
+}
+
+// Include il footer
+require_once 'includes/footer.php';
 ?>

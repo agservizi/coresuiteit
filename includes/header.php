@@ -1,41 +1,84 @@
+<?php
+// Questo file contiene l'header condiviso
+?>
 <!DOCTYPE html>
-<html lang="it" data-theme="<?php echo isset($_COOKIE['theme']) ? $_COOKIE['theme'] : 'light'; ?>">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $pageTitle ?? 'CoreSuite IT'; ?></title>
-    
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
-    
-    <!-- Segoe UI Variable font - necessario per Windows 11 -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI+Variable:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- FontAwesome - usato per le icone Windows 11 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
-    <!-- Windows 11 Styles -->
-    <link rel="stylesheet" href="assets/css/win11.css">
-    <link rel="stylesheet" href="assets/css/win11-components.css">
-    <link rel="stylesheet" href="assets/css/win11-notifications.css">
-    <link rel="stylesheet" href="assets/css/win11-fluent.css">
-    <link rel="stylesheet" href="assets/css/win11-animations.css">
-    <link rel="stylesheet" href="assets/css/win11-explorer.css">
-    <link rel="stylesheet" href="assets/css/win11-settings.css">
-    <link rel="stylesheet" href="assets/css/win11-widgets.css">
-    
-    <!-- CSS originale del sito -->
-    <link rel="stylesheet" href="assets/css/style.css">
-    
-    <?php if(isset($extraCss)): ?>
-        <?php foreach($extraCss as $css): ?>
-            <link rel="stylesheet" href="<?php echo $css; ?>">
-        <?php endforeach; ?>
-    <?php endif; ?>
+    <title><?php echo isset($pageTitle) ? $pageTitle : 'CoreSuite IT'; ?></title>
+    <!-- Include CSS -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- Include FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body class="windows11-environment">
+<body>
+    <!-- Header Navigation -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="../index.php">CoreSuite</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="../index.php">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../pages/clienti.php">Clienti</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../pages/pagamenti.php">Pagamenti</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../pages/telefonia.php">Telefonia</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../pages/energia.php">Energia</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../pages/spedizioni.php">Spedizioni</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../pages/fatture.php">Fatture</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../pages/servizi-digitali.php">Servizi Digitali</a>
+                        </li>
+                        <?php if (isset($_SESSION['user_id']) && hasRole('admin')): ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../pages/utenti.php">Utenti</a>
+                        </li>
+                        <?php endif; ?>
+                    </ul>
+                    <ul class="navbar-nav ms-auto">
+                        <?php if (isset($_SESSION['user_id'])): ?>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <?php echo $_SESSION['user_name']; ?>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="../pages/profilo.php">Profilo</a></li>
+                                <li><a class="dropdown-item" href="../pages/impostazioni.php">Impostazioni</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="../logout.php">Logout</a></li>
+                            </ul>
+                        </li>
+                        <?php else: ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../login.php">Login</a>
+                        </li>
+                        <?php endif; ?>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main class="container py-4">
     <!-- Elemento per il background con effetto Mica -->
     <div class="win11-mica-bg"></div>
 
@@ -67,7 +110,7 @@
         <div class="app-content">
             <!-- Sidebar -->
             <aside id="sidebar" class="app-sidebar">
-                <div class="sidebar-header">
+                <div class="sidebar-header"></div>
                     <img src="assets/img/logo.png" alt="<?php echo SITE_NAME; ?>" class="sidebar-logo">
                     <h1 class="sidebar-title">CoreSuite</h1>
                 </div>

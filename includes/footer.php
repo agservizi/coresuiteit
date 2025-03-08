@@ -75,6 +75,27 @@
             </div>
         </div>
     </footer>
+    </main>
+    <!-- Footer -->
+    <footer class="bg-light py-3 mt-5 border-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; <?php echo date('Y'); ?> CoreSuite IT. Tutti i diritti riservati.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="text-decoration-none text-muted me-3">Privacy</a>
+                    <a href="#" class="text-decoration-none text-muted me-3">Termini</a>
+                    <a href="#" class="text-decoration-none text-muted">Supporto</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="assets/js/script.js"></script>
     </main> <!-- End app-main -->
     </div> <!-- End app-container -->
     
