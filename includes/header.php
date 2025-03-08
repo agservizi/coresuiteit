@@ -63,9 +63,48 @@
             
             <!-- Page content -->
             <div class="p-4">
-</main>
-</div>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+            <!-- ...existing code... -->
+            </div>
+        </div>
+        <!-- Sidebar -->
+        <div class="drawer-side">
+            <label for="drawer-toggle" class="drawer-overlay"></label> 
+            <ul class="menu p-4 w-80 bg-base-100 text-base-content">
+                <li><a href="index.php?page=dashboard"><i class="fas fa-tachometer-alt mr-2"></i> Dashboard</a></li>
+                <li><a href="index.php?page=pagamenti"><i class="fas fa-money-bill-wave mr-2"></i> Gestione Pagamenti</a></li>
+                <li><a href="index.php?page=telefonia"><i class="fas fa-phone mr-2"></i> Gestione Telefonia</a></li>
+                <li><a href="index.php?page=energia"><i class="fas fa-bolt mr-2"></i> Gestione Luce e Gas</a></li>
+                <li><a href="index.php?page=spedizioni"><i class="fas fa-shipping-fast mr-2"></i> Gestione Spedizioni</a></li>
+                <li><a href="index.php?page=servizi-digitali"><i class="fas fa-laptop mr-2"></i> Servizi Digitali</a></li>
+                <li><a href="index.php?page=clienti"><i class="fas fa-users mr-2"></i> Gestione Clienti</a></li>
+                <li><a href="index.php?page=utenti"><i class="fas fa-user-shield mr-2"></i> Gestione Utenti</a></li>
+                <li><a href="index.php?page=fatture"><i class="fas fa-file-invoice-dollar mr-2"></i> Gestione Fatture</a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="footer p-10 bg-base-200 text-base-content">
+        <div>
+            <span class="footer-title">Servizi</span> 
+            <a class="link link-hover">Branding</a> 
+            <a class="link link-hover">Design</a> 
+            <a class="link link-hover">Marketing</a> 
+            <a class="link link-hover">Advertisement</a>
+        </div> 
+        <div>
+            <span class="footer-title">Azienda</span> 
+            <a class="link link-hover">Chi siamo</a> 
+            <a class="link link-hover">Contatti</a> 
+            <a class="link link-hover">Lavora con noi</a> 
+            <a class="link link-hover">Press kit</a>
+        </div> 
+        <div>
+            <span class="footer-title">Legale</span> 
+            <a class="link link-hover">Termini di utilizzo</a> 
+            <a class="link link-hover">Privacy policy</a> 
+            <a class="link link-hover">Cookie policy</a>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

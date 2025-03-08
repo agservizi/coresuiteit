@@ -97,3 +97,16 @@ CREATE TABLE IF NOT EXISTS `spedizioni` (
   PRIMARY KEY (`id`),
   FOREIGN KEY (`cliente_id`) REFERENCES `clienti`(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Tabella fatture
+CREATE TABLE IF NOT EXISTS `fatture` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `fattura_id` VARCHAR(20) NOT NULL,
+  `cliente_id` INT(11) NOT NULL,
+  `importo` DECIMAL(10,2) NOT NULL,
+  `descrizione` TEXT DEFAULT NULL,
+  `stato` ENUM('Pagata', 'Non Pagata') NOT NULL DEFAULT 'Non Pagata',
+  `data_creazione` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`cliente_id`) REFERENCES `clienti`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -14,7 +14,7 @@ if (!isLoggedIn() && basename($_SERVER['PHP_SELF']) != 'login.php') {
 
 // Gestione del routing di base
 $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
-$allowed_pages = ['dashboard', 'pagamenti', 'telefonia', 'energia', 'spedizioni', 'servizi-digitali', 'clienti', 'utenti'];
+$allowed_pages = ['dashboard', 'pagamenti', 'telefonia', 'energia', 'spedizioni', 'servizi-digitali', 'clienti', 'utenti', 'fatture'];
 
 if (in_array($page, $allowed_pages)) {
     $page_to_load = "pages/{$page}.php";
