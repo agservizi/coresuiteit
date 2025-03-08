@@ -5,10 +5,10 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // Configurazione database
-define('DB_HOST', 'localhost');  // o l'host del tuo database remoto
+define('DB_HOST', '127.0.0.1:3306');
 define('DB_NAME', 'u427445037_coresuite');
-define('DB_USER', 'u427445037_admin');  // Corretto il nome utente
-define('DB_PASS', 'TuaPasswordSicura123!');  // Sostituisci con la password corretta
+define('DB_USER', 'u427445037_coresuite');  // Tornato all'utente originale
+define('DB_PASS', 'Giogiu2123@');  // Tornato alla password originale
 
 // Altre configurazioni
 define('SITE_NAME', 'CoreSuite IT');
