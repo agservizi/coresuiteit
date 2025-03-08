@@ -1,0 +1,19 @@
+User-agent: *
+Disallow: /config/
+Disallow: /includes/
+Disallow: /api/
+Disallow: /templates/
+Disallow: /uploads/
+Disallow: /vendor/
+Allow: /assets/
+
+User-agent: Googlebot
+Allow: /
+Disallow: /config/
+Disallow: /includes/
+Disallow: /api/
+Disallow: /templates/
+Disallow: /uploads/
+Disallow: /vendor/
+
+Sitemap: https://coresuite.it/sitemap.xml

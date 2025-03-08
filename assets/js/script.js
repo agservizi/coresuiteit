@@ -16,6 +16,27 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Integrazione con Windows 11
     setupWindows11Integration();
+
+    // Aggiungi listener per il pulsante "Chiudi"
+    document.querySelectorAll('.win-control-btn.close').forEach(button => {
+        button.addEventListener('click', function() {
+            // Chiudi la finestra corrente
+            const appWindow = this.closest('.app-window');
+            if (appWindow) {
+                appWindow.style.display = 'none'; // Nascondi la finestra
+            }
+        });
+    });
+
+    // Funzione per mostrare un avviso di conferma prima di eliminare
+    window.confirmDelete = function(id, tipo) {
+        return confirm('Sei sicuro di voler eliminare questo ' + tipo + '?');
+    };
+
+    // Funzione per mostrare un avviso di conferma prima di eliminare un documento
+    window.confirmDeleteDoc = function(id) {
+        return confirm('Sei sicuro di voler eliminare questo documento?');
+    };
 });
 
 /**

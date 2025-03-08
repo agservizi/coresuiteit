@@ -110,3 +110,181 @@ CREATE TABLE IF NOT EXISTS `fatture` (
   PRIMARY KEY (`id`),
   FOREIGN KEY (`cliente_id`) REFERENCES `clienti`(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Tabella notifiche
+CREATE TABLE IF NOT EXISTS `notifiche` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `utente_id` INT(11) NOT NULL,
+  `tipo` ENUM('info', 'success', 'warning', 'error') NOT NULL DEFAULT 'info',
+  `messaggio` TEXT NOT NULL,
+  `link` VARCHAR(255) DEFAULT NULL,
+  `data_creazione` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `letta` TINYINT(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`utente_id`) REFERENCES `utenti`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Tabella documenti
+CREATE TABLE IF NOT EXISTS `documenti` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `cliente_id` INT(11) NOT NULL,
+  `nome` VARCHAR(100) NOT NULL,
+  `filename` VARCHAR(255) NOT NULL,
+  `tipo` VARCHAR(50) NOT NULL,
+  `note` TEXT DEFAULT NULL,
+  `data_caricamento` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`cliente_id`) REFERENCES `clienti`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Tabella di reset password
+CREATE TABLE IF NOT EXISTS `password_reset` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `utente_id` INT(11) NOT NULL,
+  `token` VARCHAR(255) NOT NULL,
+  `scadenza` DATETIME NOT NULL,
+  `data_creazione` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`utente_id`) REFERENCES `utenti`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Tabella appuntamenti
+CREATE TABLE IF NOT EXISTS `appuntamenti` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `cliente_id` INT(11) NOT NULL,
+  `utente_id` INT(11) DEFAULT NULL,
+  `titolo` VARCHAR(255) NOT NULL,
+  `descrizione` TEXT DEFAULT NULL,
+  `data` DATE NOT NULL,
+  `ora` TIME NOT NULL,
+  `durata` INT(11) NOT NULL DEFAULT '60',
+  `stato` ENUM('in attesa', 'confermato', 'cancellato') NOT NULL DEFAULT 'in attesa',
+  `data_creazione` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`cliente_id`) REFERENCES `clienti`(`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`utente_id`) REFERENCES `utenti`(`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Tabella permessi
+CREATE TABLE IF NOT EXISTS `permessi` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(100) NOT NULL,
+  `descrizione` VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `nome` (`nome`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Tabella permessi_ruoli (associazione tra ruoli e permessi)
+CREATE TABLE IF NOT EXISTS `permessi_ruoli` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `ruolo` ENUM('admin', 'operatore') NOT NULL,
+  `permesso_id` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`permesso_id`) REFERENCES `permessi`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Tabella tickets di supporto
+CREATE TABLE IF NOT EXISTS `tickets_supporto` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `cliente_id` INT(11) NOT NULL,
+  `utente_id` INT(11) DEFAULT NULL,
+  `titolo` VARCHAR(255) NOT NULL,
+  `descrizione` TEXT DEFAULT NULL,
+  `priorita` ENUM('Bassa', 'Media', 'Alta', 'Urgente') NOT NULL DEFAULT 'Media',
+  `stato` ENUM('Aperto', 'In corso', 'Chiuso') NOT NULL DEFAULT 'Aperto',
+  `data_apertura` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `data_chiusura` TIMESTAMP DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`cliente_id`) REFERENCES `clienti`(`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`utente_id`) REFERENCES `utenti`(`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Tabella knowledge base
+CREATE TABLE IF NOT EXISTS `knowledge_base` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `utente_id` INT(11) DEFAULT NULL,
+  `titolo` VARCHAR(255) NOT NULL,
+  `contenuto` TEXT DEFAULT NULL,
+  `categoria` VARCHAR(100) NOT NULL,
+  `data_creazione` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`utente_id`) REFERENCES `utenti`(`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Tabella messaggi
+CREATE TABLE IF NOT EXISTS `messaggi` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `mittente_id` INT(11) NOT NULL,
+  `destinatario_id` INT(11) NOT NULL,
+  `messaggio` TEXT NOT NULL,
+  `data_invio` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `letto` TINYINT(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`mittente_id`) REFERENCES `utenti`(`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`destinatario_id`) REFERENCES `utenti`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Tabella audit log
+CREATE TABLE IF NOT EXISTS `audit_log` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `user_id` INT(11) DEFAULT NULL,
+  `action` VARCHAR(255) NOT NULL,
+  `details` TEXT DEFAULT NULL,
+  `table_name` VARCHAR(100) DEFAULT NULL,
+  `record_id` INT(11) DEFAULT NULL,
+  `ip_address` VARCHAR(50) DEFAULT NULL,
+  `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`user_id`) REFERENCES `utenti`(`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Tabella API keys
+CREATE TABLE IF NOT EXISTS `api_keys` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `user_id` INT(11) NOT NULL,
+  `api_key` VARCHAR(255) NOT NULL,
+  `data_creazione` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`user_id`) REFERENCES `utenti`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Tabella campagne marketing
+CREATE TABLE IF NOT EXISTS `campagne_marketing` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `utente_id` INT(11) DEFAULT NULL,
+  `nome` VARCHAR(255) NOT NULL,
+  `descrizione` TEXT DEFAULT NULL,
+  `tipo` ENUM('Email', 'SMS', 'Social') NOT NULL,
+  `destinatari` ENUM('Tutti', 'Clienti', 'Leads') NOT NULL,
+  `contenuto` TEXT DEFAULT NULL,
+  `data_creazione` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`utente_id`) REFERENCES `utenti`(`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Tabella leads
+CREATE TABLE IF NOT EXISTS `leads` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(50) NOT NULL,
+  `cognome` VARCHAR(50) NOT NULL,
+  `email` VARCHAR(100) DEFAULT NULL,
+  `telefono` VARCHAR(20) NOT NULL,
+  `fonte` VARCHAR(100) DEFAULT NULL,
+  `note` TEXT DEFAULT NULL,
+  `data_registrazione` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Tabella automazioni
+CREATE TABLE IF NOT EXISTS `automazioni` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `utente_id` INT(11) DEFAULT NULL,
+  `nome` VARCHAR(255) NOT NULL,
+  `descrizione` TEXT DEFAULT NULL,
+  `trigger_evento` VARCHAR(100) NOT NULL,
+  `azione` VARCHAR(255) NOT NULL,
+  `condizioni` TEXT DEFAULT NULL,
+  `data_creazione` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`utente_id`) REFERENCES `utenti`(`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
