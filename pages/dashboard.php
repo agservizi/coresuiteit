@@ -1,38 +1,41 @@
 <div class="container mx-auto">
     <!-- Stats Cards -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <div class="card bg-primary text-primary-content">
-            <div class="card-body">
-                <h2 class="card-title text-3xl">24</h2>
-                <p>Transazioni oggi</p>
-                <div class="text-sm">
+        <div class="stats shadow">
+            <div class="stat">
+                <div class="stat-title">Transazioni oggi</div>
+                <div class="stat-value text-primary">24</div>
+                <div class="stat-desc">
                     <i class="fas fa-arrow-up"></i> +12% rispetto a ieri
                 </div>
             </div>
         </div>
-        <div class="card bg-accent text-accent-content">
-            <div class="card-body">
-                <h2 class="card-title text-3xl">€1.254</h2>
-                <p>Incasso giornaliero</p>
-                <div class="text-sm">
+        
+        <div class="stats shadow">
+            <div class="stat">
+                <div class="stat-title">Incasso giornaliero</div>
+                <div class="stat-value text-secondary">€1.254</div>
+                <div class="stat-desc">
                     <i class="fas fa-arrow-up"></i> +5% rispetto a ieri
                 </div>
             </div>
         </div>
-        <div class="card bg-secondary text-secondary-content">
-            <div class="card-body">
-                <h2 class="card-title text-3xl">7</h2>
-                <p>Nuovi clienti</p>
-                <div class="text-sm">
+        
+        <div class="stats shadow">
+            <div class="stat">
+                <div class="stat-title">Nuovi clienti</div>
+                <div class="stat-value text-accent">7</div>
+                <div class="stat-desc">
                     <i class="fas fa-arrow-up"></i> +2 rispetto a ieri
                 </div>
             </div>
         </div>
-        <div class="card bg-info text-info-content">
-            <div class="card-body">
-                <h2 class="card-title text-3xl">12</h2>
-                <p>Pratiche in attesa</p>
-                <div class="text-sm">
+        
+        <div class="stats shadow">
+            <div class="stat">
+                <div class="stat-title">Pratiche in attesa</div>
+                <div class="stat-value text-error">12</div>
+                <div class="stat-desc">
                     <i class="fas fa-arrow-down"></i> -3 rispetto a ieri
                 </div>
             </div>
@@ -43,8 +46,8 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
         <div class="card bg-base-100 shadow-xl lg:col-span-2">
             <div class="card-body">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="card-title">Andamento transazioni</h2>
+                <h2 class="card-title">Andamento transazioni</h2>
+                <div class="flex justify-end">
                     <div class="join">
                         <button class="join-item btn btn-sm">Settimana</button>
                         <button class="join-item btn btn-sm btn-active">Mese</button>
@@ -58,7 +61,7 @@
         </div>
         <div class="card bg-base-100 shadow-xl">
             <div class="card-body">
-                <h2 class="card-title mb-4">Distribuzione servizi</h2>
+                <h2 class="card-title">Distribuzione servizi</h2>
                 <div class="h-64">
                     <canvas id="serviziChart"></canvas>
                 </div>

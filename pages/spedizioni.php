@@ -1,4 +1,5 @@
 <?php
+require_once '../includes/functions.php';
 // Controllo permessi
 if (!isLoggedIn()) {
     header("Location: login.php");
@@ -45,6 +46,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         
         if ($stmt->execute()) {
             $success_message = "Spedizione registrata con successo! Tracking Number: " . $tracking_number;
+            
+            // Invia email di notifica
+            $cliente_email = getClientEmailById($cliente_id);
+            $subject = "Nuova Spedizione Registrata";
+            $message = "Caro cliente, la tua spedizione con tracking number {$tracking_number} è stata registrata con successo.";
+            sendNotificationEmail($cliente_email, $subject, $message);
         } else {
             $error_message = "Errore durante la registrazione della spedizione.";
         }

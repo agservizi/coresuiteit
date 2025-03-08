@@ -1,4 +1,6 @@
 <?php
+require_once '../includes/functions.php';
+
 // Controllo permessi
 if (!isLoggedIn()) {
     header("Location: login.php");
@@ -31,6 +33,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         
         if ($stmt->execute()) {
             $success_message = "Pratica telefonia registrata con successo!";
+            
+            // Invia email di notifica
+            $cliente_email = getClientEmailById($cliente_id);
+            $subject = "Nuova Pratica Telefonia Registrata";
+            $message = "Caro cliente, la tua pratica telefonia con operatore {$operatore} è stata registrata con successo.";
+            sendNotificationEmail($cliente_email, $subject, $message);
         } else {
             $error_message = "Errore durante la registrazione della pratica.";
         }

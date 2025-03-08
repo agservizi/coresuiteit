@@ -33,4 +33,23 @@ function formatDate($date, $format = 'd/m/Y H:i') {
 function generateTransactionId() {
     return 'TR' . date('YmdHis') . rand(1000, 9999);
 }
+
+// Funzione per ottenere l'email del cliente tramite il suo ID
+function getClientEmailById($cliente_id) {
+    global $conn;
+    $stmt = $conn->prepare("SELECT email FROM clienti WHERE id = :id LIMIT 1");
+    $stmt->bindParam(':id', $cliente_id);
+    $stmt->execute();
+    $cliente = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $cliente['email'];
+}
+
+// Funzione per inviare email di notifica
+function sendNotificationEmail($to, $subject, $message) {
+    $headers = "From: no-reply@agenziaservizi.com\r\n";
+    $headers .= "Reply-To: no-reply@agenziaservizi.com\r\n";
+    $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+
+    return mail($to, $subject, $message, $headers);
+}
 ?>

@@ -1,4 +1,6 @@
 <?php
+require_once '../includes/functions.php';
+
 // Controllo permessi
 if (!isLoggedIn()) {
     header("Location: login.php");
@@ -38,6 +40,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         
         if ($stmt->execute()) {
             $success_message = "Contratto registrato con successo!";
+            
+            // Invia email di notifica
+            $cliente_email = getClientEmailById($cliente_id);
+            $subject = "Nuovo Contratto Energia Registrato";
+            $message = "Caro cliente, il tuo contratto energia con fornitore {$fornitore} è stato registrato con successo.";
+            sendNotificationEmail($cliente_email, $subject, $message);
         } else {
             $error_message = "Errore durante la registrazione del contratto.";
         }
