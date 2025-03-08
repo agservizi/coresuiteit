@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoreSuite IT - Windows 11</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI+Variable:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Windows 11 Styles -->
+    <link rel="stylesheet" href="assets/css/win11.css">
+    <link rel="stylesheet" href="assets/css/win11-components.css">
+    <link rel="stylesheet" href="assets/css/win11-notifications.css">
+    <link rel="stylesheet" href="assets/css/win11-settings.css">
+    <link rel="stylesheet" href="assets/css/win11-fluent.css">
+    <link rel="stylesheet" href="assets/css/win11-animations.css">
+    <link rel="stylesheet" href="assets/css/win11-explorer.css">
+    
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI Variable', 'Segoe UI', sans-serif;
+            height: 100%;
+            overflow: hidden;
+            background-color: var(--win11-bg);
+            color: var(--win11-text);
+        }
+        
+        .desktop {
+            width: 100%;
+            height: calc(100vh - var(--win11-taskbar-height));
+            position: relative;
+            overflow: hidden;
+            background-image: url('assets/img/win11-wallpaper.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .desktop-icons {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, 80px);
+            grid-template-rows: repeat(auto-fill, 90px);
+            gap: 10px;
+            padding: 20px;
+        }
+        
+        .desktop-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: var(--win11-radius-sm);
+            transition: var(--win11-transition);
+        }
+        
+        .desktop-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .desktop-item.selected {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .desktop-item-icon {
+            font-size: 28px;
+            color: white;
+            margin-bottom: 5px;
+            filter: drop-shadow(0 2px 3px rgba(0,0,0,0.3));
+        }
+        
+        .desktop-item-name {
+            font-size: 12px;
+            color: white;
+            max-width: 70px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.7);
+        }
+    </style>
+</head>
+<body>
+    <div class="desktop">
+        <div class="desktop-icons">
+            <div class="desktop-item">
+                <div class="desktop-item-icon">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="desktop-item-name">Utente</div>
+            </div>
+            <div class="desktop-item">
+                <div class="desktop-item-icon">
+                    <i class="far fa-folder"></i>
+                </div>
+                <div class="desktop-item-name">Documenti</div>
+            </div>
+            <div class="desktop-item">
+                <div class="desktop-item-icon">
+                    <i class="fas fa-cog"></i>
+                </div>
+                <div class="desktop-item-name">Impostazioni</div>
+            </div>
+            <div class="desktop-item" id="openExplorerItem">
+                <div class="desktop-item-icon">
+                    <i class="fas fa-hdd"></i>
+                </div>
+                <div class="desktop-item-name">CoreSuite IT</div>
+            </div>
+        </div>
+        
+        <!-- App Window Example -->
+        <div class="app-window" style="width: 800px; height: 600px; top: 100px; left: 150px;">
+            <div class="app-title-bar">
+                <div class="app-icon">
+                    <i class="fas fa-folder"></i>
+                </div>
+                <h1 class="app-title">CoreSuite IT - Esplora File</h1>
+                <div class="win-controls">
+                    <button class="win-control-btn minimize" title="Minimizza">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button class="win-control-btn maximize" title="Massimizza">
+                        <i class="fas fa-square"></i>
+                    </button>
+                    <button class="win-control-btn close" title="Chiudi">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="app-window-content explorer-window">
+                <div class="explorer-header">
+                    <div class="explorer-controls">
+                        <button class="explorer-btn" title="Indietro" disabled>
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                        <button class="explorer-btn" title="Avanti" disabled>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                        <button class="explorer-btn" title="Su">
+                            <i class="fas fa-arrow-up"></i>
+                        </button>
+                        <button class="explorer-btn" title="Aggiorna">
+                            <i class="fas fa-sync"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="address-bar">
+                        <div class="address-path">
+                            <span class="path-home"><i class="fas fa-home"></i></span>
+                            <span class="path-separator">&gt;</span>
+                            <span class="path-folder">CoreSuite IT</span>
+                            <span class="path-separator">&gt;</span>
+                            <span class="path-folder">Progetti</span>
+                        </div>
+                        <div class="address-search">
+                            <input type="text" placeholder="Cerca in Progetti">
+                            <button><i class="fas fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="explorer-body">
+                    <div class="explorer-sidebar">
+                        <div class="sidebar-section">
+                            <div class="sidebar-header">Accesso rapido</div>
+                            <ul class="sidebar-items">
+                                <li class="sidebar-item active">
+                                    <i class="fas fa-star"></i>
+                                    <span>Accesso rapido</span>
+                                </li>
+                                <li class="sidebar-item">
+                                    <i class="fas fa-desktop"></i>
+                                    <span>Desktop</span>
+                                </li>
+                                <li class="sidebar-item">
+                                    <i class="fas fa-download"></i>
+                                    <span>Download</span>
+                                </li>
+                                <li class="sidebar-item">
+                                    <i class="fas fa-file-alt"></i>
+                                    <span>Documenti</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="sidebar-section">
+                            <div class="sidebar-header">CoreSuite IT</div>
+                            <ul class="sidebar-items">
+                                <li class="sidebar-item">
+                                    <i class="fas fa-folder"></i>
+                                    <span>Progetti</span>
+                                </li>
+                                <li class="sidebar-item">
+                                    <i class="fas fa-folder"></i>
+                                    <span>Clienti</span>
+                                </li>
+                                <li class="sidebar-item">
+                                    <i class="fas fa-folder"></i>
+                                    <span>Fatture</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="explorer-content">
+                        <div class="files-container">
+                            <!-- Cartelle -->
+                            <div class="file-item folder">
+                                <div class="file-icon">
+                                    <i class="fas fa-folder"></i>
+                                </div>
+                                <div class="file-name">Clienti Attivi</div>
+                            </div>
+                            <div class="file-item folder">
+                                <div class="file-icon">
+                                    <i class="fas fa-folder"></i>
+                                </div>
+                                <div class="file-name">Pagamenti</div>
+                            </div>
+                            <div class="file-item folder">
+                                <div class="file-icon">
+                                    <i class="fas fa-folder"></i>
+                                </div>
+                                <div class="file-name">Dashboard</div>
+                            </div>
+                            
+                            <!-- File -->
+                            <div class="file-item">
+                                <div class="file-icon">
+                                    <i class="fas fa-file-excel text-success"></i>
+                                </div>
+                                <div class="file-name">Bilancio_2023.xlsx</div>
+                            </div>
+                            <div class="file-item">
+                                <div class="file-icon">
+                                    <i class="fas fa-file-word text-primary"></i>
+                                </div>
+                                <div class="file-name">Relazione_mensile.docx</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Windows 11 Taskbar -->
+    <div class="win11-taskbar">
+        <div class="taskbar-start">
+            <button class="taskbar-icon" id="startMenuBtn" title="Start">
+                <i class="fab fa-windows"></i>
+            </button>
+            <button class="taskbar-icon" title="Widget">
+                <i class="fas fa-th-large"></i>
+            </button>
+        </div>
+        <div class="taskbar-app-icons">
+            <button class="taskbar-icon" title="Esplora File">
+                <i class="far fa-folder"></i>
+            </button>
+            <button class="taskbar-icon" title="Edge">
+                <i class="fab fa-edge"></i>
+            </button>
+            <button class="taskbar-icon active" title="CoreSuite IT">
+                <i class="fas fa-desktop"></i>
+            </button>
+        </div>
+        <div class="win11-task-right">
+            <button class="taskbar-icon" title="Notifiche">
+                <i class="far fa-bell"></i>
+            </button>
+            <div class="taskbar-separator"></div>
+            <div id="taskbarTime" class="taskbar-time">10:30</div>
+        </div>
+    </div>
+    
+    <!-- Scripts Windows 11 -->
+    <script src="assets/js/win11.js"></script>
+    <script src="assets/js/win11-fluent.js"></script>
+    <script src="assets/js/win11-effects.js"></script>
+    <script src="assets/js/win11-widgets.js"></script>
+    <script src="assets/js/win11-settings.js"></script>
+    <script>
+        // Inizializza le funzionalità demo per questo esempio
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mostra una notifica di benvenuto dopo 1 secondo
+            setTimeout(() => {
+                Win11.notifications.showToast({
+                    title: 'Benvenuto in CoreSuite IT',
+                    message: 'Interfaccia Windows 11 attiva e pronta all\'uso.',
+                    type: 'success',
+                    duration: 5000
+                });
+            }, 1000);
+            
+            // Abilita la selezione delle icone del desktop
+            document.querySelectorAll('.desktop-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    // Deseleziona tutti gli item
+                    document.querySelectorAll('.desktop-item').forEach(i => i.classList.remove('selected'));
+                    // Seleziona questo item
+                    this.classList.add('selected');
+                    
+                    // Se è il CoreSuite IT item, mostra una notifica
+                    if (this.id === 'openExplorerItem') {
+                        // Qui potremmo aprire un'altra finestra 
+                        Win11.notifications.showToast({
+                            title: 'CoreSuite IT',
+                            message: 'Apertura dell\'applicazione...',
+                            type: 'info',
+                            duration: 3000
+                        });
+                    }
+                });
+                
+                // Doppio click per aprire
+                item.addEventListener('dblclick', function() {
+                    if (this.id === 'openExplorerItem') {
+                        // Mostra la finestra esistente in primo piano
+                        const window = document.querySelector('.app-window');
+                        window.style.zIndex = '1000';
+                    }
+                });
+            });
+            
+            // Demo pulsante impostazioni
+            document.querySelector('.desktop-item:nth-child(3)').addEventListener('dblclick', function() {
+                if (typeof openSettingsPanel === 'function') {
+                    openSettingsPanel();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

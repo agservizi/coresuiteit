@@ -1,0 +1,466 @@
+/**
+ * CoreSuite IT - Windows 11 Style
+ * Versione: 1.0
+ * 
+ * Stile completo Windows 11 in un unico file
+ */
+
+:root {
+  /* Colori principali */
+  --win11-accent: #0078d4;
+  --win11-accent-dark: #005a9e;
+  --win11-accent-light: #429ce3;
+  --win11-accent-transparent: rgba(0, 120, 212, 0.1);
+  
+  /* Colori superficie */
+  --win11-bg: #f2f2f2;
+  --win11-surface-1: #ffffff;
+  --win11-surface-2: #fafafa;
+  --win11-card-bg: rgba(255, 255, 255, 0.8);
+  --win11-mica-bg: rgba(243, 243, 243, 0.85);
+  --win11-mica-border: rgba(0, 0, 0, 0.1);
+  
+  /* Testo */
+  --win11-text: #202020;
+  --win11-text-secondary: #606060;
+  --win11-text-disabled: #a0a0a0;
+  --win11-divider: rgba(0, 0, 0, 0.08);
+  
+  /* Feedback */
+  --win11-info: #0078d4;
+  --win11-success: #107c10;
+  --win11-warning: #ff8c00;
+  --win11-error: #e81123;
+  
+  /* Ombre */
+  --win11-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --win11-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --win11-shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.12);
+  
+  /* Bordi */
+  --win11-radius-sm: 4px;
+  --win11-radius: 8px;
+  --win11-radius-lg: 12px;
+  
+  /* Layout */
+  --win11-taskbar-height: 48px;
+  
+  /* Effetti */
+  --win11-transition: all 0.25s ease;
+  --win11-backdrop-filter: blur(20px) saturate(125%);
+}
+
+/* Tema scuro */
+[data-theme="dark"] {
+  --win11-bg: #202020;
+  --win11-surface-1: #2c2c2c;
+  --win11-surface-2: #333333;
+  --win11-card-bg: rgba(44, 44, 44, 0.8);
+  --win11-mica-bg: rgba(32, 32, 32, 0.85);
+  --win11-mica-border: rgba(255, 255, 255, 0.1);
+  --win11-text: #ffffff;
+  --win11-text-secondary: #c0c0c0;
+  --win11-text-disabled: #6a6a6a;
+  --win11-divider: rgba(255, 255, 255, 0.06);
+}
+
+/* Effetto Mica per lo sfondo */
+.win11-mica-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+  background: url('../img/win11-wallpaper.jpg') center/cover no-repeat fixed;
+  opacity: 0.2;
+}
+
+/* Taskbar */
+.win11-taskbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: var(--win11-taskbar-height);
+  background: var(--win11-mica-bg);
+  backdrop-filter: var(--win11-backdrop-filter);
+  border-top: 1px solid var(--win11-mica-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  z-index: 1000;
+}
+
+.taskbar-start {
+  display: flex;
+  align-items: center;
+}
+
+.taskbar-app-icons {
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.win11-task-right {
+  display: flex;
+  align-items: center;
+}
+
+.taskbar-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--win11-radius-sm);
+  background: transparent;
+  border: none;
+  color: var(--win11-text);
+  margin: 0 2px;
+  position: relative;
+  transition: var(--win11-transition);
+  cursor: pointer;
+}
+
+.taskbar-icon:hover {
+  background-color: var(--win11-surface-1);
+}
+
+.taskbar-icon.active {
+  background-color: var(--win11-surface-2);
+}
+
+.taskbar-icon.active::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 2px;
+  background-color: var(--win11-accent);
+  border-radius: 2px;
+}
+
+/* Menu Start */
+.win11-start-panel {
+  position: fixed;
+  bottom: calc(var(--win11-taskbar-height) + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  width: 640px;
+  max-height: 680px;
+  background: var(--win11-mica-bg);
+  backdrop-filter: var(--win11-backdrop-filter);
+  border: 1px solid var(--win11-mica-border);
+  border-radius: var(--win11-radius-lg);
+  box-shadow: var(--win11-shadow-lg);
+  z-index: 1050;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.win11-start-panel.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Notifiche */
+.win11-toast-container {
+  position: fixed;
+  bottom: calc(var(--win11-taskbar-height) + 10px);
+  right: 10px;
+  z-index: 1060;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 360px;
+  pointer-events: none;
+}
+
+.win11-toast-container > * {
+  pointer-events: auto;
+}
+
+.win11-toast {
+  background: var(--win11-mica-bg);
+  backdrop-filter: var(--win11-backdrop-filter);
+  border: 1px solid var(--win11-mica-border);
+  border-radius: var(--win11-radius);
+  box-shadow: var(--win11-shadow-lg);
+  padding: 16px;
+  display: flex;
+  align-items: flex-start;
+  transform: translateX(100%);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+}
+
+.win11-toast.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.win11-toast::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background-color: var(--win11-accent);
+}
+
+.win11-toast-info::before { background-color: var(--win11-info); }
+.win11-toast-success::before { background-color: var(--win11-success); }
+.win11-toast-warning::before { background-color: var(--win11-warning); }
+.win11-toast-error::before { background-color: var(--win11-error); }
+
+.win11-toast-icon {
+  margin-right: 12px;
+  font-size: 24px;
+  line-height: 1;
+  display: flex;
+}
+
+.win11-toast-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.win11-toast-title {
+  font-weight: 600;
+  margin-bottom: 4px;
+  font-size: 14px;
+  color: var(--win11-text);
+}
+
+.win11-toast-message {
+  font-size: 13px;
+  color: var(--win11-text-secondary);
+  word-wrap: break-word;
+}
+
+.win11-toast-close {
+  background: none;
+  border: none;
+  color: var(--win11-text-secondary);
+  cursor: pointer;
+  font-size: 12px;
+  opacity: 0.7;
+  padding: 4px;
+  display: flex;
+}
+
+.win11-toast-close:hover {
+  opacity: 1;
+}
+
+/* Widget Panel */
+.widgets-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 680px;
+  height: 100vh;
+  background: var(--win11-mica-bg);
+  backdrop-filter: var(--win11-backdrop-filter);
+  border-right: 1px solid var(--win11-mica-border);
+  z-index: 1050;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+  transform: translateX(-100%);
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.widgets-panel.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Context Menu */
+.win11-context-menu {
+  position: absolute;
+  background: var(--win11-mica-bg);
+  backdrop-filter: var(--win11-backdrop-filter);
+  border: 1px solid var(--win11-mica-border);
+  border-radius: var(--win11-radius);
+  min-width: 200px;
+  box-shadow: var(--win11-shadow-lg);
+  z-index: 1080;
+  overflow: hidden;
+  opacity: 0;
+  transform: scale(0.98);
+  transform-origin: top left;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.win11-context-menu.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.context-menu-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: var(--win11-transition);
+  color: var(--win11-text);
+  font-size: 13px;
+}
+
+.context-menu-item i {
+  width: 20px;
+  margin-right: 10px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.context-menu-item:hover {
+  background-color: var(--win11-surface-1);
+}
+
+.context-menu-separator {
+  height: 1px;
+  background-color: var(--win11-divider);
+  margin: 4px 0;
+}
+
+/* Effetto Click */
+.win11-click-effect {
+  position: fixed;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  background-color: rgba(255, 255, 255, 0.4);
+  width: 10px;
+  height: 10px;
+  pointer-events: none;
+  animation: click-effect 0.7s ease-out;
+  z-index: 9999;
+}
+
+@keyframes click-effect {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(20);
+  }
+}
+
+/* Finestre */
+.app-window {
+  background: var(--win11-mica-bg);
+  backdrop-filter: var(--win11-backdrop-filter);
+  border: 1px solid var(--win11-mica-border);
+  border-radius: var(--win11-radius-lg);
+  box-shadow: var(--win11-shadow-lg);
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  min-width: 400px;
+  min-height: 300px;
+  transition: var(--win11-transition);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-title-bar {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--win11-divider);
+  user-select: none;
+  cursor: default;
+}
+
+.app-title {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.win-controls {
+  display: flex;
+  gap: 2px;
+}
+
+.win-control-btn {
+  background: transparent;
+  border: none;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--win11-radius-sm);
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--win11-text-secondary);
+  transition: var(--win11-transition);
+}
+
+.win-control-btn:hover {
+  background-color: var(--win11-surface-1);
+}
+
+.win-control-btn.close:hover {
+  background-color: #c42b1c;
+  color: white;
+}
+
+.app-window-content {
+  flex: 1;
+  overflow: auto;
+  position: relative;
+}
+
+.app-window.maximized {
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  border-radius: 0 !important;
+}
+
+.app-window.minimized {
+  transform: scale(0.7) translateY(100%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Altre animazioni */
+@keyframes win11-notification-in {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
