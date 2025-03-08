@@ -1,0 +1,238 @@
+/**
+ * Windows 11 Animations
+ * Animazioni specifiche per Windows 11
+ */
+
+/* Animazione entrata per il menu Start */
+@keyframes win11-start-in {
+    from {
+        opacity: 0;
+        transform: translateY(20px) translateX(-50%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) translateX(-50%);
+    }
+}
+
+/* Animazione uscita per il menu Start */
+@keyframes win11-start-out {
+    from {
+        opacity: 1;
+        transform: translateY(0) translateX(-50%);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(20px) translateX(-50%);
+    }
+}
+
+/* Animazione per notifiche e toast */
+@keyframes win11-notification-in {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes win11-notification-out {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
+
+/* Animazione per dialog e pannelli modali */
+@keyframes win11-modal-in {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes win11-modal-out {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+}
+
+/* Animazione per menu contestuali */
+@keyframes win11-context-menu-in {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+        transform-origin: top left;
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+        transform-origin: top left;
+    }
+}
+
+/* Animazione per finestre che si minimizzano */
+@keyframes win11-window-minimize {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.7) translateY(80%);
+    }
+}
+
+/* Animazione per finestre che si massimizzano */
+@keyframes win11-window-maximize {
+    0% {
+        border-radius: var(--win11-radius-lg);
+        transform: scale(0.98);
+    }
+    100% {
+        border-radius: 0;
+        transform: scale(1);
+    }
+}
+
+/* Animazione per finestre che tornano dalle dimensioni normali */
+@keyframes win11-window-restore {
+    0% {
+        border-radius: 0;
+        transform: scale(1);
+    }
+    100% {
+        border-radius: var(--win11-radius-lg);
+        transform: scale(0.98);
+    }
+}
+
+/* Animazione task view */
+@keyframes win11-task-view-in {
+    from {
+        opacity: 0;
+        transform: scale(1.05);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Animazione widget */
+@keyframes win11-widget-in {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Animazione pulse per notifiche */
+@keyframes win11-pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(0, 120, 212, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 5px rgba(0, 120, 212, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(0, 120, 212, 0);
+    }
+}
+
+/* Animazione per progress bar */
+@keyframes win11-progress {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+/* Animazione hover fade per icone */
+@keyframes win11-hover-fade {
+    from {
+        filter: saturate(100%);
+    }
+    to {
+        filter: saturate(130%);
+    }
+}
+
+/* Applicazione animazioni ai componenti */
+.win11-start-panel.show {
+    animation: win11-start-in 0.25s cubic-bezier(0.2, 0, 0, 1) forwards;
+}
+
+.win11-start-panel.hide {
+    animation: win11-start-out 0.2s cubic-bezier(0.2, 0, 0, 1) forwards;
+}
+
+.win11-toast.show {
+    animation: win11-notification-in 0.3s cubic-bezier(0.2, 0, 0, 1) forwards;
+}
+
+.win11-toast.hide {
+    animation: win11-notification-out 0.25s cubic-bezier(0.2, 0, 0, 1) forwards;
+}
+
+.win11-modal-animate {
+    animation: win11-modal-in 0.25s cubic-bezier(0.2, 0, 0, 1) forwards;
+}
+
+.win11-context-menu.show {
+    animation: win11-context-menu-in 0.2s cubic-bezier(0.2, 0, 0, 1) forwards;
+}
+
+.app-window.minimizing {
+    animation: win11-window-minimize 0.3s cubic-bezier(0.2, 0, 0, 1) forwards;
+}
+
+.app-window.maximizing {
+    animation: win11-window-maximize 0.3s cubic-bezier(0.2, 0, 0, 1) forwards;
+}
+
+.app-window.restoring {
+    animation: win11-window-restore 0.3s cubic-bezier(0.2, 0, 0, 1) forwards;
+}
+
+.task-view-panel.show {
+    animation: win11-task-view-in 0.3s cubic-bezier(0.2, 0, 0, 1) forwards;
+}
+
+.win11-widget {
+    animation: win11-widget-in 0.3s cubic-bezier(0.2, 0, 0, 1) forwards;
+}
+
+.notification-badge {
+    animation: win11-pulse 2s infinite;
+}
+
+.win11-progress-bar {
+    animation: win11-progress 2s linear forwards;
+}
+
+.taskbar-icon:hover {
+    animation: win11-hover-fade 0.2s forwards;
+}

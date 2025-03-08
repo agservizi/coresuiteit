@@ -1,0 +1,330 @@
+/**
+ * Windows 11 Notifications System
+ * Stile per le notifiche e toast in stile Windows 11
+ */
+
+/* Toast Container */
+.win11-toast-container {
+    position: fixed;
+    bottom: calc(var(--win11-taskbar-height) + 10px);
+    right: 10px;
+    z-index: 1060;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 360px;
+    pointer-events: none;
+}
+
+.win11-toast-container > * {
+    pointer-events: auto;
+}
+
+/* Toast Notification */
+.win11-toast {
+    background: var(--win11-mica-bg);
+    backdrop-filter: var(--win11-backdrop-filter);
+    border: 1px solid var(--win11-mica-border);
+    border-radius: var(--win11-radius);
+    box-shadow: var(--win11-shadow-lg);
+    padding: 16px;
+    display: flex;
+    align-items: flex-start;
+    transform: translateX(100%);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+}
+
+.win11-toast.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.win11-toast::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background-color: var(--win11-accent);
+}
+
+.win11-toast-info::before { background-color: var(--win11-info); }
+.win11-toast-success::before { background-color: var(--win11-success); }
+.win11-toast-warning::before { background-color: var(--win11-warning); }
+.win11-toast-error::before { background-color: var(--win11-error); }
+
+.win11-toast-icon {
+    margin-right: 12px;
+    font-size: 24px;
+    line-height: 1;
+    display: flex;
+}
+
+.win11-toast-info .win11-toast-icon { color: var(--win11-info); }
+.win11-toast-success .win11-toast-icon { color: var(--win11-success); }
+.win11-toast-warning .win11-toast-icon { color: var(--win11-warning); }
+.win11-toast-error .win11-toast-icon { color: var(--win11-error); }
+
+.win11-toast-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.win11-toast-title {
+    font-weight: 600;
+    margin-bottom: 4px;
+    font-size: 14px;
+    color: var(--win11-text);
+}
+
+.win11-toast-message {
+    font-size: 13px;
+    color: var(--win11-text-secondary);
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+.win11-toast-close {
+    background: none;
+    border: none;
+    color: var(--win11-text-secondary);
+    cursor: pointer;
+    font-size: 12px;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.win11-toast-close:hover {
+    opacity: 1;
+}
+
+/* Action Toast (with buttons) */
+.win11-toast-actions {
+    display: flex;
+    margin-top: 12px;
+    gap: 8px;
+}
+
+.win11-toast-btn {
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: var(--win11-radius-sm);
+    border: 1px solid var(--win11-divider);
+    background: var(--win11-surface-1);
+    color: var(--win11-text);
+    cursor: pointer;
+    transition: var(--win11-transition);
+    flex: 1;
+    text-align: center;
+    text-decoration: none;
+}
+
+.win11-toast-btn-primary {
+    background: var(--win11-accent);
+    color: white;
+    border-color: transparent;
+}
+
+.win11-toast-btn:hover {
+    background: var(--win11-surface-2);
+}
+
+.win11-toast-btn-primary:hover {
+    background: var(--win11-accent-dark);
+}
+
+/* Progress Toast */
+.win11-toast-progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background-color: var(--win11-accent);
+    width: 100%;
+    transform-origin: left;
+}
+
+.win11-toast-progress-animate {
+    animation: win11-toast-progress-anim 5s linear forwards;
+}
+
+@keyframes win11-toast-progress-anim {
+    from { transform: scaleX(1); }
+    to { transform: scaleX(0); }
+}
+
+/* Quick Settings Flyout Panel */
+.win11-quick-settings {
+    position: fixed;
+    bottom: calc(var(--win11-taskbar-height) + 8px);
+    right: 10px;
+    width: 360px;
+    background: var(--win11-mica-bg);
+    backdrop-filter: var(--win11-backdrop-filter);
+    border: 1px solid var(--win11-mica-border);
+    border-radius: var(--win11-radius-lg);
+    box-shadow: var(--win11-shadow-lg);
+    z-index: 1050;
+    padding: 16px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.win11-quick-settings.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* System Notification Badge */
+.notification-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: var(--win11-error);
+    color: white;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translate(25%, -25%);
+}
+
+/* Context Menu */
+.win11-context-menu {
+    position: absolute;
+    background: var(--win11-mica-bg);
+    backdrop-filter: var(--win11-backdrop-filter);
+    border: 1px solid var(--win11-mica-border);
+    border-radius: var(--win11-radius);
+    min-width: 200px;
+    box-shadow: var(--win11-shadow-lg);
+    z-index: 1080;
+    overflow: hidden;
+    opacity: 0;
+    transform: scale(0.98);
+    transform-origin: top left;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.win11-context-menu.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.context-menu-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: var(--win11-transition-fast);
+    color: var(--win11-text);
+    font-size: 13px;
+}
+
+.context-menu-item i {
+    width: 20px;
+    margin-right: 10px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.context-menu-item:hover {
+    background-color: var(--win11-surface-1);
+}
+
+.context-menu-separator {
+    height: 1px;
+    background-color: var(--win11-divider);
+    margin: 4px 0;
+}
+
+/* Snap Layout Tool */
+.win11-snap-options {
+    position: absolute;
+    z-index: 1070;
+    background: var(--win11-mica-bg);
+    backdrop-filter: var(--win11-backdrop-filter);
+    border: 1px solid var(--win11-mica-border);
+    border-radius: var(--win11-radius);
+    padding: 8px;
+    box-shadow: var(--win11-shadow-lg);
+    display: none;
+}
+
+.win11-snap-options.show {
+    display: block;
+    animation: win11-scale-in 0.2s ease forwards;
+}
+
+.snap-options-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 4px;
+    width: 150px;
+    height: 150px;
+}
+
+.snap-option {
+    background-color: var(--win11-surface-1);
+    border: 1px solid var(--win11-divider);
+    border-radius: var(--win11-radius-sm);
+    cursor: pointer;
+    transition: var(--win11-transition-fast);
+}
+
+.snap-option:hover {
+    background-color: var(--win11-accent);
+    border-color: var(--win11-accent);
+}
+
+.snap-option.left-half {
+    grid-row: span 3;
+}
+
+.snap-option.right-half {
+    grid-row: span 3;
+}
+
+.snap-option.quad {
+    /* Default size for quads */
+}
+
+/* Volume Slider Popup */
+.volume-slider-popup {
+    position: absolute;
+    z-index: 1060;
+    background: var(--win11-mica-bg);
+    backdrop-filter: var(--win11-backdrop-filter);
+    border: 1px solid var(--win11-mica-border);
+    border-radius: var(--win11-radius);
+    padding: 16px;
+    box-shadow: var(--win11-shadow-lg);
+    width: 300px;
+    animation: win11-fade-in 0.2s ease-out forwards;
+}
+
+.volume-value {
+    text-align: center;
+    margin-top: 8px;
+    color: var(--win11-text);
+    font-size: 12px;
+}

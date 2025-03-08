@@ -1,202 +1,942 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Segoe+UI+Variable:wght@400;500;600;700&display=swap');
 
-/* Base styles */
-body {
-  font-family: 'Inter', sans-serif;
+/* CoreSuite IT - Stile Windows 11 Pro */
+:root {
+  /* Colori Windows 11 */
+  --win11-accent: #0078d4;
+  --win11-accent-dark: #005a9e;
+  --win11-accent-light: #429ce3;
+  --win11-accent-transparent: rgba(0, 120, 212, 0.1);
+  
+  /* Gradienti */
+  --win11-gradient: linear-gradient(135deg, #0078d4, #00b0ff);
+  
+  /* Background */
+  --win11-bg: rgba(243, 243, 243, 0.85);
+  --win11-bg-solid: #f3f3f3;
+  --win11-card-bg: rgba(255, 255, 255, 0.7);
+  --win11-sidebar-bg: rgba(243, 243, 243, 0.8);
+  
+  /* Mica Effect Colors */
+  --win11-mica-bg: rgba(255, 255, 255, 0.8);
+  --win11-mica-border: rgba(255, 255, 255, 0.1);
+  --win11-mica-shadow: rgba(0, 0, 0, 0.05);
+  
+  /* Text */
+  --win11-text: #202020;
+  --win11-text-secondary: #5c5c5c;
+  --win11-text-disabled: #a0a0a0;
+  --win11-text-on-accent: #ffffff;
+  
+  /* Feedback */
+  --win11-success: #0f7b0f;
+  --win11-warning: #c19c00;
+  --win11-error: #c42b1c;
+  --win11-info: #0067c0;
+  
+  /* Superfici */
+  --win11-surface-1: rgba(255, 255, 255, 0.5);
+  --win11-surface-2: rgba(255, 255, 255, 0.3);
+  
+  /* Border Radius */
+  --win11-radius-sm: 4px;
+  --win11-radius: 8px;
+  --win11-radius-lg: 12px;
+  
+  /* Ombre */
+  --win11-shadow-sm: 0 2px 5px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1);
+  --win11-shadow: 0 4px 8px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.05);
+  --win11-shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.05);
+  --win11-shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.04);
+  
+  /* Transizioni */
+  --win11-transition-fast: all 0.1s ease;
+  --win11-transition: all 0.2s ease;
+  --win11-transition-slow: all 0.3s ease;
+  
+  /* Dimensioni Layout */
+  --win11-header-height: 48px;
+  --win11-sidebar-width: 280px;
+  --win11-taskbar-height: 48px;
+  
+  /* Windows 11 specific vars */
+  --win11-divider: rgba(0, 0, 0, 0.06);
+  --win11-backdrop-filter: blur(20px) saturate(180%);
 }
 
-/* Hide collapse checkbox */
-.collapse-title > input {
-  display: none;
+/* Tema scuro */
+[data-theme="dark"] {
+  --win11-bg: rgba(32, 32, 32, 0.85);
+  --win11-bg-solid: #202020;
+  --win11-card-bg: rgba(43, 43, 43, 0.7);
+  --win11-sidebar-bg: rgba(43, 43, 43, 0.8);
+  
+  --win11-mica-bg: rgba(43, 43, 43, 0.8);
+  --win11-mica-border: rgba(255, 255, 255, 0.05);
+  --win11-mica-shadow: rgba(0, 0, 0, 0.2);
+  
+  --win11-text: #ffffff;
+  --win11-text-secondary: #c0c0c0;
+  --win11-text-disabled: #757575;
+  
+  --win11-surface-1: rgba(70, 70, 70, 0.5);
+  --win11-surface-2: rgba(50, 50, 50, 0.5);
+  
+  --win11-divider: rgba(255, 255, 255, 0.1);
 }
 
-/* Custom styling for form required fields */
-.form-required::after {
-  content: "*";
-  color: hsl(var(--er));
-  margin-left: 3px;
+/* Core Styles */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: 'Segoe UI Variable', 'Segoe UI', sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--win11-text);
+  background-color: var(--win11-bg-solid);
+  background-attachment: fixed;
 }
 
-/* Custom styling for tables */
-.table-compact th, .table-compact td {
-  padding: 0.5rem;
-}
-
-/* Custom animations for alerts */
-.alert {
-  animation: slide-in 0.3s ease-out;
-}
-
-@keyframes slide-in {
-  0% {
-    transform: translateY(-10px);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-/* Custom transitions */
-.transition-all {
-  transition: all 0.3s ease;
-}
-
-/* Badge customization */
-.badge-outline.badge-success {
-  color: hsl(var(--su));
-  border-color: hsl(var(--su));
-}
-
-.badge-outline.badge-error {
-  color: hsl(var(--er));
-  border-color: hsl(var(--er));
-}
-
-.badge-outline.badge-warning {
-  color: hsl(var(--wa));
-  border-color: hsl(var(--wa));
-}
-
-.badge-outline.badge-info {
-  color: hsl(var(--in));
-  border-color: hsl(var(--in));
-}
-
-/* Stats card customization */
-.stats-card {
-  padding: 1rem;
-  border-radius: 0.375rem;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-}
-
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: hsl(var(--b3));
-}
-
-::-webkit-scrollbar-thumb {
-  background: hsl(var(--b2));
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--bc));
-}
-
-.sidebar {
+/* Set wallpaper background */
+body::before {
+  content: "";
   position: fixed;
   top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('../img/win11-wallpaper.jpg') center center/cover no-repeat fixed;
+  z-index: -1;
+}
+
+body {
+  position: relative;
+  z-index: 0;
+  background-color: transparent;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Segoe UI Variable', 'Segoe UI', sans-serif;
+  font-weight: 600;
+  color: var(--win11-text);
+  margin-top: 0;
+}
+
+a {
+  color: var(--win11-accent);
+  text-decoration: none;
+  transition: var(--win11-transition);
+}
+
+a:hover {
+  color: var(--win11-accent-dark);
+  text-decoration: underline;
+}
+
+/* Layout */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Windows 11 style taskbar */
+.win11-taskbar {
+  position: fixed;
   bottom: 0;
   left: 0;
-  z-index: 100;
-  padding: 48px 0 0;
-  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
-  background-color: #1f2937;
+  width: 100%;
+  height: var(--win11-taskbar-height);
+  background: var(--win11-mica-bg);
+  backdrop-filter: var(--win11-backdrop-filter);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  box-shadow: var(--win11-shadow);
+  border-top: 1px solid var(--win11-mica-border);
 }
 
-.sidebar .nav-link {
-  font-weight: 500;
-  color: #d1d5db;
-  padding: .75rem 1rem;
-  margin-bottom: .2rem;
+.win11-taskbar-content {
+  display: flex;
+  align-items: center;
+  height: 100%;
 }
 
-.sidebar .nav-link:hover {
-  color: #007bff;
-  background-color: #374151;
+.taskbar-app-icons {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
-.sidebar .nav-link.active {
-  color: #007bff;
-  background-color: #374151;
+.taskbar-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--win11-radius-sm);
+  transition: var(--win11-transition);
+  color: var(--win11-text);
+  position: relative;
 }
 
-.sidebar-heading {
-  font-size: .75rem;
-  text-transform: uppercase;
+.taskbar-icon:hover {
+  background-color: var(--win11-surface-1);
 }
 
-/* Main content */
-main {
-  padding-top: 20px;
+.taskbar-icon.active::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16px;
+  height: 2px;
+  background-color: var(--win11-accent);
+  border-radius: 1px;
 }
 
-.card {
-  margin-bottom: 20px;
+.win11-start-button {
+  width: 40px;
+  height: 40px;
+  margin: 0 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--win11-radius-sm);
+  transition: var(--win11-transition);
+  background-color: transparent;
   border: none;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  background-color: #ffffff;
-  border-radius: 0.375rem;
+  color: var(--win11-accent);
+  cursor: pointer;
 }
 
-.card-header {
-  background-color: #f9fafb;
-  border-bottom: 1px solid #e5e7eb;
+.win11-start-button:hover {
+  background-color: var(--win11-surface-1);
 }
 
-.table-responsive {
-  overflow-x: auto;
+.win11-task-right {
+  position: absolute;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-/* Custom dashboard widgets */
-.dashboard-stat {
+/* App Window */
+.app-window {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin: 10px;
+  margin-bottom: calc(var(--win11-taskbar-height) + 10px);
+  background: var(--win11-mica-bg);
+  backdrop-filter: var(--win11-backdrop-filter);
+  border-radius: var(--win11-radius-lg);
+  box-shadow: var(--win11-shadow-lg);
+  border: 1px solid var(--win11-mica-border);
+  overflow: hidden;
+}
+
+/* App Title Bar */
+.app-title-bar {
+  height: 32px;
+  background: var(--win11-mica-bg);
+  backdrop-filter: var(--win11-backdrop-filter);
+  border-bottom: 1px solid var(--win11-divider);
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  -webkit-app-region: drag; /* Makes the titlebar draggable in Electron apps */
+}
+
+.app-title {
+  font-size: 12px;
+  font-weight: 400;
+  margin-left: 8px;
+  color: var(--win11-text);
+}
+
+.win-controls {
+  display: flex;
+  margin-left: auto;
+  -webkit-app-region: no-drag;
+}
+
+.win-control-btn {
+  width: 40px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--win11-text);
+  transition: var(--win11-transition-fast);
+  cursor: pointer;
+}
+
+.win-control-btn:hover {
+  background-color: var(--win11-surface-1);
+}
+
+.win-control-btn.close:hover {
+  background-color: #e81123;
+  color: white;
+}
+
+/* App Content */
+.app-content {
+  flex: 1;
+  overflow: auto;
+  display: flex;
+  background: var(--win11-mica-bg);
+}
+
+/* Sidebar */
+.app-sidebar {
+  width: var(--win11-sidebar-width);
+  background: var(--win11-sidebar-bg);
+  backdrop-filter: var(--win11-backdrop-filter);
+  border-right: 1px solid var(--win11-divider);
+  display: flex;
+  flex-direction: column;
+  transition: var(--win11-transition);
+  overflow-y: auto;
+}
+
+.sidebar-header {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--win11-divider);
+}
+
+.sidebar-logo {
+  width: 32px;
+  height: 32px;
+  margin-right: 12px;
+  border-radius: var(--win11-radius-sm);
+}
+
+.sidebar-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.sidebar-nav {
+  flex: 1;
+  padding: 8px 4px;
+  overflow-y: auto;
+}
+
+.nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-item {
+  margin-bottom: 2px;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+  color: var(--win11-text);
+  border-radius: var(--win11-radius);
+  transition: var(--win11-transition);
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  background-color: var(--win11-surface-1);
+  text-decoration: none;
+  color: var(--win11-text);
+}
+
+.nav-link.active {
+  background-color: var(--win11-accent-transparent);
+  color: var(--win11-accent);
+  font-weight: 500;
+}
+
+.nav-icon {
+  font-size: 16px;
+  width: 24px;
+  margin-right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-separator {
+  height: 1px;
+  margin: 12px 16px;
+  background-color: var(--win11-divider);
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
   padding: 20px;
-  border-radius: 5px;
-  margin-bottom: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
-.bg-info-light {
-  background-color: rgba(0, 123, 255, 0.1);
+/* Windows 11 Cards */
+.win11-card {
+  background: var(--win11-card-bg);
+  backdrop-filter: var(--win11-backdrop-filter);
+  border-radius: var(--win11-radius);
+  border: 1px solid var(--win11-mica-border);
+  box-shadow: var(--win11-shadow);
+  margin-bottom: 16px;
+  transition: var(--win11-transition);
+  overflow: hidden;
 }
 
-.bg-success-light {
-  background-color: rgba(40, 167, 69, 0.1);
+.win11-card:hover {
+  box-shadow: var(--win11-shadow-lg);
+  transform: translateY(-2px);
 }
 
-.bg-warning-light {
-  background-color: rgba(255, 193, 7, 0.1);
+.win11-card-header {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--win11-divider);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.bg-danger-light {
-  background-color: rgba(220, 53, 69, 0.1);
+.win11-card-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.win11-card-body {
+  padding: 16px;
+}
+
+.win11-card-footer {
+  padding: 12px 16px;
+  border-top: 1px solid var(--win11-divider);
 }
 
 /* Forms */
-.form-required::after {
-  content: "*";
-  color: red;
-  margin-left: 3px;
+.win11-form-control {
+  display: block;
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-family: 'Segoe UI Variable', sans-serif;
+  line-height: 1.5;
+  color: var(--win11-text);
+  background-color: var(--win11-surface-1);
+  background-clip: padding-box;
+  border: 1px solid var(--win11-divider);
+  border-radius: var(--win11-radius);
+  transition: var(--win11-transition);
 }
 
-.alert {
-  padding: 1rem;
-  border-radius: 0.375rem;
+.win11-form-control:focus {
+  color: var(--win11-text);
+  background-color: var(--win11-surface-1);
+  border-color: var(--win11-accent);
+  outline: 0;
+  box-shadow: 0 0 0 1px var(--win11-accent-transparent);
+}
+
+.win11-form-label {
+  display: inline-block;
+  margin-bottom: 4px;
+  font-weight: 500;
+  color: var(--win11-text-secondary);
+}
+
+/* Buttons */
+.win11-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: 8px 16px;
+  font-size: 14px;
+  line-height: 1.5;
+  border-radius: var(--win11-radius);
+  transition: var(--win11-transition);
+  cursor: pointer;
+}
+
+.win11-btn-accent {
+  color: var(--win11-text-on-accent);
+  background-color: var(--win11-accent);
+  border-color: var(--win11-accent);
+}
+
+.win11-btn-accent:hover {
+  background-color: var(--win11-accent-dark);
+  border-color: var(--win11-accent-dark);
+}
+
+.win11-btn-outline {
+  color: var(--win11-text);
+  background-color: transparent;
+  border-color: var(--win11-divider);
+}
+
+.win11-btn-outline:hover {
+  color: var(--win11-accent);
+  background-color: var(--win11-surface-1);
+  border-color: var(--win11-accent);
+}
+
+.win11-btn-text {
+  color: var(--win11-accent);
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.win11-btn-text:hover {
+  background-color: var(--win11-surface-1);
+  text-decoration: none;
+}
+
+.win11-btn-sm {
+  padding: 4px 12px;
+  font-size: 12px;
+}
+
+.win11-btn-lg {
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
+/* Tables */
+.win11-table {
+  width: 100%;
+  max-width: 100%;
   margin-bottom: 1rem;
+  color: var(--win11-text);
+  border-collapse: separate;
+  border-spacing: 0;
 }
 
-.alert-success {
-  background-color: #d1fae5;
-  color: #065f46;
+.win11-table th,
+.win11-table td {
+  padding: 12px 16px;
+  vertical-align: top;
+  border-top: 1px solid var(--win11-divider);
 }
 
-.alert-danger {
-  background-color: #fee2e2;
-  color: #b91c1c;
+.win11-table thead th {
+  vertical-align: bottom;
+  border-bottom: 2px solid var(--win11-divider);
+  font-weight: 600;
+  color: var(--win11-text-secondary);
+  text-transform: uppercase;
+  font-size: 12px;
 }
 
-.alert-info {
-  background-color: #bfdbfe;
-  color: #1e3a8a;
+.win11-table tbody + tbody {
+  border-top: 2px solid var(--win11-divider);
 }
 
-.alert-warning {
-  background-color: #fef3c7;
-  color: #92400e;
+.win11-table-sm th,
+.win11-table-sm td {
+  padding: 8px;
+}
+
+.win11-table-hover tbody tr:hover {
+  background-color: var(--win11-surface-1);
+}
+
+.win11-table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* Stats Widget */
+.win11-stat {
+  background: var(--win11-card-bg);
+  backdrop-filter: var(--win11-backdrop-filter);
+  border-radius: var(--win11-radius);
+  border: 1px solid var(--win11-mica-border);
+  padding: 16px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  position: relative;
+  transition: var(--win11-transition);
+}
+
+.win11-stat:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--win11-shadow);
+}
+
+.win11-stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--win11-radius);
+  background: var(--win11-accent);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  margin-right: 16px;
+}
+
+.win11-stat-content {
+  flex: 1;
+}
+
+.win11-stat-value {
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--win11-text);
+}
+
+.win11-stat-label {
+  font-size: 12px;
+  color: var(--win11-text-secondary);
+  margin-bottom: 4px;
+}
+
+.win11-stat-change {
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.win11-stat-change-positive {
+  color: var(--win11-success);
+}
+
+.win11-stat-change-negative {
+  color: var(--win11-error);
+}
+
+.win11-stat.accent {
+  border-left: 4px solid var(--win11-accent);
+}
+
+.win11-stat.success {
+  border-left: 4px solid var(--win11-success);
+}
+
+.win11-stat.warning {
+  border-left: 4px solid var(--win11-warning);
+}
+
+.win11-stat.danger {
+  border-left: 4px solid var(--win11-error);
+}
+
+/* Chart Container */
+.win11-chart {
+  position: relative;
+  height: 300px;
+  padding: 8px;
+}
+
+/* Accordion/Pivot */
+.win11-pivot {
+  overflow: hidden;
+  border: 1px solid var(--win11-divider);
+  border-radius: var(--win11-radius);
+}
+
+.win11-pivot-item {
+  border-bottom: 1px solid var(--win11-divider);
+}
+
+.win11-pivot-item:last-child {
+  border-bottom: none;
+}
+
+.win11-pivot-header {
+  padding: 12px 16px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.win11-pivot-content {
+  padding: 16px;
+  display: none;
+  border-top: 1px solid var(--win11-divider);
+}
+
+.win11-pivot-item.active .win11-pivot-content {
+  display: block;
+}
+
+/* Alerts/Notifications */
+.win11-alert {
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  border-radius: var(--win11-radius);
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+}
+
+.win11-alert-icon {
+  margin-right: 12px;
+  font-size: 16px;
+}
+
+.win11-alert-content {
+  flex: 1;
+}
+
+.win11-alert-title {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.win11-alert-info {
+  background-color: rgba(0, 120, 212, 0.1);
+  color: var(--win11-info);
+}
+
+.win11-alert-success {
+  background-color: rgba(15, 123, 15, 0.1);
+  color: var(--win11-success);
+}
+
+.win11-alert-warning {
+  background-color: rgba(193, 156, 0, 0.1);
+  color: var(--win11-warning);
+}
+
+.win11-alert-error {
+  background-color: rgba(196, 43, 28, 0.1);
+  color: var(--win11-error);
+}
+
+/* Theme Switcher */
+.theme-switch-wrapper {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  margin-top: auto;
+}
+
+.theme-switch {
+  position: relative;
+  display: inline-block;
+  width: 36px;
+  height: 20px;
+  margin: 0 8px;
+}
+
+.theme-switch-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--win11-text-disabled);
+  transition: .3s;
+  border-radius: 20px;
+}
+
+.theme-switch-slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  transition: .3s;
+  border-radius: 50%;
+}
+
+input:checked + .theme-switch-slider {
+  background-color: var(--win11-accent);
+}
+
+input:checked + .theme-switch-slider:before {
+  transform: translateX(16px);
+}
+
+/* Windows 11 Badge */
+.win11-badge {
+  display: inline-block;
+  padding: 0.25em 0.5em;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  border-radius: 100px;
+}
+
+.win11-badge-primary {
+  color: var(--win11-text-on-accent);
+  background-color: var(--win11-accent);
+}
+
+.win11-badge-success {
+  color: white;
+  background-color: var(--win11-success);
+}
+
+.win11-badge-warning {
+  color: black;
+  background-color: var(--win11-warning);
+}
+
+.win11-badge-danger {
+  color: white;
+  background-color: var(--win11-error);
+}
+
+/* Utility Classes */
+.text-primary {
+  color: var(--win11-accent) !important;
+}
+
+.bg-primary {
+  background-color: var(--win11-accent) !important;
+  color: var(--win11-text-on-accent);
+}
+
+.bg-transparent-primary {
+  background-color: var(--win11-accent-transparent) !important;
+}
+
+.text-success {
+  color: var(--win11-success) !important;
+}
+
+.text-warning {
+  color: var(--win11-warning) !important;
+}
+
+.text-danger {
+  color: var(--win11-error) !important;
+}
+
+.text-secondary {
+  color: var(--win11-text-secondary) !important;
+}
+
+.d-flex {
+  display: flex !important;
+}
+
+.flex-column {
+  flex-direction: column !important;
+}
+
+.align-items-center {
+  align-items: center !important;
+}
+
+.justify-content-between {
+  justify-content: space-between !important;
+}
+
+.ms-auto {
+  margin-left: auto !important;
+}
+
+.p-0 {
+  padding: 0 !important;
+}
+
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+
+.mb-3 {
+  margin-bottom: 12px !important;
+}
+
+/* Responsive utilities */
+@media (max-width: 768px) {
+  .app-sidebar {
+    transform: translateX(-100%);
+    position: fixed;
+    z-index: 1030;
+    top: 0;
+    bottom: 0;
+  }
+  
+  .app-sidebar.show {
+    transform: translateX(0);
+  }
+  
+  .main-content {
+    margin-left: 0;
+  }
+  
+  body.sidebar-toggled:before {
+    content: "";
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1020;
+    background-color: rgba(0,0,0,0.3);
+  }
+}
+
+/* Dark Theme Overrides */
+body.dark-theme .win11-card,
+body.dark-theme .win11-stat {
+  background-color: var(--win11-card-bg);
+}
+
+body.dark-theme .win11-form-control {
+  background-color: rgba(50, 50, 50, 0.5);
+  border-color: var(--win11-divider);
+  color: var(--win11-text);
+}
+
+body.dark-theme .win11-btn-outline {
+  color: var(--win11-text);
+  border-color: var(--win11-divider);
+}
+
+body.dark-theme .win11-btn-outline:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Animation Utilities */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.win11-fade-in {
+  animation: fadeIn 0.3s ease forwards;
 }

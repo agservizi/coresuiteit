@@ -131,6 +131,7 @@
                                     <td>Bollettino Postale</td>
                                     <td><span class="badge badge-success">Completato</span></td>
                                     <td>Oggi 14:30</td>
+
                                 </tr>
                                 <tr>
                                     <td>Giuseppe Verdi</td>
