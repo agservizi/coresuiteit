@@ -1,4 +1,7 @@
 <?php
+require_once '../config/config.php';
+require_once '../includes/functions.php';
+
 // Controllo permessi
 if (!isLoggedIn() || !hasRole('admin')) {
     header("Location: login.php");
