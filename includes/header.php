@@ -5,81 +5,127 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo SITE_NAME; ?> - Gestionale</title>
     <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@4.0.0/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.0.0/dist/full.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="assets/css/style.css" rel="stylesheet">
 </head>
-<body class="bg-base-200">
-    <div class="drawer lg:drawer-open">
-        <input id="drawer-toggle" type="checkbox" class="drawer-toggle" />
-        <div class="drawer-content flex flex-col">
-            <!-- Navbar -->
-            <div class="navbar bg-base-100 shadow-md z-10">
-                <div class="flex-none lg:hidden">
-                    <label for="drawer-toggle" class="btn btn-square btn-ghost">
-                        <i class="fas fa-bars"></i>
-                    </label>
+<body>
+    <!-- Mobile sidebar toggle -->
+    <button id="sidebarToggleBtn" class="sidebar-toggle-btn d-md-none">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block sidebar collapse">
+                <div class="position-sticky pt-3">
+                    <div class="text-center mb-4">
+                        <img src="assets/img/logo.png" alt="Agenzia Servizi" class="sidebar-logo">
+                    </div>
+                    
+                    <!-- Theme toggle -->
+                    <div class="d-flex justify-content-center align-items-center mb-4">
+                        <span class="theme-icon"><i class="fas fa-sun"></i></span>
+                        <label class="theme-switch">
+                            <input type="checkbox" id="themeToggle">
+                            <span class="theme-switch-slider"></span>
+                        </label>
+                        <span class="theme-icon"><i class="fas fa-moon"></i></span>
+                    </div>
+                    
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link <?php echo ($page == 'dashboard') ? 'active' : ''; ?>" href="index.php?page=dashboard">
+                                <i class="fas fa-home"></i> Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <?php echo ($page == 'pagamenti') ? 'active' : ''; ?>" href="index.php?page=pagamenti">
+                                <i class="fas fa-money-bill"></i> Pagamenti
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <?php echo ($page == 'telefonia') ? 'active' : ''; ?>" href="index.php?page=telefonia">
+                                <i class="fas fa-mobile-alt"></i> Telefonia
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <?php echo ($page == 'energia') ? 'active' : ''; ?>" href="index.php?page=energia">
+                                <i class="fas fa-bolt"></i> Luce e Gas
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <?php echo ($page == 'spedizioni') ? 'active' : ''; ?>" href="index.php?page=spedizioni">
+                                <i class="fas fa-shipping-fast"></i> Spedizioni
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <?php echo ($page == 'servizi-digitali') ? 'active' : ''; ?>" href="index.php?page=servizi-digitali">
+                                <i class="fas fa-fingerprint"></i> Servizi Digitali
+                            </a>
+                        </li>
+                        <li class="nav-item divider"></li>
+                        <li class="nav-item">
+                            <a class="nav-link <?php echo ($page == 'clienti') ? 'active' : ''; ?>" href="index.php?page=clienti">
+                                <i class="fas fa-users"></i> Clienti
+                            </a>
+                        </li>
+                        <?php if (hasRole('admin')): ?>
+                        <li class="nav-item">
+                            <a class="nav-link <?php echo ($page == 'utenti') ? 'active' : ''; ?>" href="index.php?page=utenti">
+                                <i class="fas fa-user-cog"></i> Gestione Utenti
+                            </a>
+                        </li>
+                        <?php endif; ?>
+                        <li class="nav-item mt-5">
+                            <a class="nav-link text-danger" href="logout.php">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a>
+                        </li>
+                    </ul>
                 </div>
-                <div class="flex-1">
-                    <span class="text-xl font-semibold">
+            </nav>
+
+            <!-- Main content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom page-header">
+                    <h1 class="h2">
                         <?php 
                         switch($page) {
-                            case 'dashboard': echo 'Dashboard'; break;
-                            case 'pagamenti': echo 'Gestione Pagamenti'; break;
-                            case 'telefonia': echo 'Gestione Telefonia'; break;
-                            case 'energia': echo 'Gestione Luce e Gas'; break;
-                            case 'spedizioni': echo 'Gestione Spedizioni'; break;
-                            case 'servizi-digitali': echo 'Servizi Digitali'; break;
-                            case 'clienti': echo 'Gestione Clienti'; break;
-                            case 'utenti': echo 'Gestione Utenti'; break;
-                            case 'profilo': echo 'Profilo Utente'; break;
-                            case 'impostazioni': echo 'Impostazioni Utente'; break;
-                            default: echo 'Dashboard';
+                            case 'dashboard': echo '<i class="fas fa-tachometer-alt me-2"></i> Dashboard'; break;
+                            case 'pagamenti': echo '<i class="fas fa-money-bill me-2"></i> Gestione Pagamenti'; break;
+                            case 'telefonia': echo '<i class="fas fa-mobile-alt me-2"></i> Gestione Telefonia'; break;
+                            case 'energia': echo '<i class="fas fa-bolt me-2"></i> Gestione Luce e Gas'; break;
+                            case 'spedizioni': echo '<i class="fas fa-shipping-fast me-2"></i> Gestione Spedizioni'; break;
+                            case 'servizi-digitali': echo '<i class="fas fa-fingerprint me-2"></i> Servizi Digitali'; break;
+                            case 'clienti': echo '<i class="fas fa-users me-2"></i> Gestione Clienti'; break;
+                            case 'utenti': echo '<i class="fas fa-user-cog me-2"></i> Gestione Utenti'; break;
+                            case 'profilo': echo '<i class="fas fa-user-edit me-2"></i> Profilo Utente'; break;
+                            case 'impostazioni': echo '<i class="fas fa-cog me-2"></i> Impostazioni Utente'; break;
+                            default: echo '<i class="fas fa-tachometer-alt me-2"></i> Dashboard';
                         }
                         ?>
-                    </span>
-                </div>
-                <div class="flex-none">
-                    <div class="dropdown dropdown-end">
-                        <div tabindex="0" role="button" class="btn btn-ghost">
-                            <div class="avatar placeholder">
-                                <div class="bg-neutral text-neutral-content rounded-full w-10">
-                                    <span><?php echo substr($_SESSION['user_name'], 0, 1); ?></span>
-                                </div>
-                            </div>
-                            <span class="ml-2 hidden md:inline"><?php echo $_SESSION['user_name']; ?></span>
-                            <i class="fas fa-chevron-down ml-1"></i>
+                    </h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-primary dropdown-toggle btn-icon" type="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-user"></i> <?php echo $_SESSION['user_name']; ?>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
+                                <li><a class="dropdown-item" href="index.php?page=profilo"><i class="fas fa-user-edit me-2"></i> Profilo</a></li>
+                                <li><a class="dropdown-item" href="index.php?page=impostazioni"><i class="fas fa-cog me-2"></i> Impostazioni</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-danger" href="logout.php"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
+                            </ul>
                         </div>
-                        <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 mt-4">
-                            <li><a href="index.php?page=profilo"><i class="fas fa-user-edit mr-2"></i> Profilo</a></li>
-                            <li><a href="index.php?page=impostazioni"><i class="fas fa-cog mr-2"></i> Impostazioni</a></li>
-                            <li><hr class="my-1"></li>
-                            <li><a href="logout.php" class="text-error"><i class="fas fa-sign-out-alt mr-2"></i> Logout</a></li>
-                        </ul>
                     </div>
                 </div>
-            </div>
-            
-            <!-- Page content -->
-            <div class="p-4">
-            <!-- ...existing code... -->
-            </div>
-        </div>
-        <!-- Sidebar -->
-        <div class="drawer-side">
-            <label for="drawer-toggle" class="drawer-overlay"></label> 
-            <ul class="menu p-4 w-80 bg-base-100 text-base-content">
-                <li><a href="index.php?page=dashboard"><i class="fas fa-tachometer-alt mr-2"></i> Dashboard</a></li>
-                <li><a href="index.php?page=pagamenti"><i class="fas fa-money-bill-wave mr-2"></i> Gestione Pagamenti</a></li>
-                <li><a href="index.php?page=telefonia"><i class="fas fa-phone mr-2"></i> Gestione Telefonia</a></li>
-                <li><a href="index.php?page=energia"><i class="fas fa-bolt mr-2"></i> Gestione Luce e Gas</a></li>
-                <li><a href="index.php?page=spedizioni"><i class="fas fa-shipping-fast mr-2"></i> Gestione Spedizioni</a></li>
-                <li><a href="index.php?page=servizi-digitali"><i class="fas fa-laptop mr-2"></i> Servizi Digitali</a></li>
-                <li><a href="index.php?page=clienti"><i class="fas fa-users mr-2"></i> Gestione Clienti</a></li>
-                <li><a href="index.php?page=utenti"><i class="fas fa-user-shield mr-2"></i> Gestione Utenti</a></li>
-                <li><a href="index.php?page=fatture"><i class="fas fa-file-invoice-dollar mr-2"></i> Gestione Fatture</a></li>
-            </ul>
+                <div class="p-4">
+                <!-- ...existing code... -->
+                </div>
+            </main>
         </div>
     </div>
     <!-- Footer -->

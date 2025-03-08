@@ -62,24 +62,73 @@
         </div>
     </div>
     
-    <script src="https://cdn.jsdelivr.net/npm/tailwindcss@4.0.0/dist/tailwind.min.js"></script>
+    <footer class="footer mt-auto py-3 border-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <span class="text-muted">&copy; <?php echo date('Y'); ?> <?php echo SITE_NAME; ?>. Tutti i diritti riservati.</span>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <span class="text-muted">Version 1.0.0</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+    </main>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="assets/js/script.js"></script>
     <script>
-        // Toggle theme
-        function toggleTheme() {
-            const html = document.querySelector('html');
-            const currentTheme = html.getAttribute('data-theme');
-            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-            html.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-        }
-
-        // Check for saved theme preference
+        // Verifica se ci sono messaggi toast da mostrare
         document.addEventListener('DOMContentLoaded', function() {
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme) {
-                document.querySelector('html').setAttribute('data-theme', savedTheme);
+            const toastElList = [].slice.call(document.querySelectorAll('.toast'));
+            const toastList = toastElList.map(function(toastEl) {
+                return new bootstrap.Toast(toastEl, {
+                    autohide: true,
+                    delay: 5000
+                });
+            });
+            toastList.forEach(toast => toast.show());
+        });
+        
+        // Sidebar toggle per versione mobile
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebarToggleBtn = document.getElementById('sidebarToggleBtn');
+            const sidebar = document.getElementById('sidebar');
+            
+            if (sidebarToggleBtn) {
+                sidebarToggleBtn.addEventListener('click', function() {
+                    document.body.classList.toggle('sidebar-toggled');
+                    sidebar.classList.toggle('show');
+                });
+            }
+        });
+        
+        // Gestione tema chiaro/scuro
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('themeToggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('change', function() {
+                    if (this.checked) {
+                        document.documentElement.setAttribute('data-theme', 'dark');
+                        document.body.classList.add('dark-theme');
+                        localStorage.setItem('theme', 'dark');
+                    } else {
+                        document.documentElement.setAttribute('data-theme', 'light');
+                        document.body.classList.remove('dark-theme');
+                        localStorage.setItem('theme', 'light');
+                    }
+                });
+
+                // Carica il tema salvato
+                const savedTheme = localStorage.getItem('theme');
+                if (savedTheme === 'dark') {
+                    themeToggle.checked = true;
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    document.body.classList.add('dark-theme');
+                }
             }
         });
     </script>
