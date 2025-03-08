@@ -117,7 +117,7 @@ switch ($endpoint) {
                     if ($id) {
                         // Ottieni singolo cliente
                         $stmt = $conn->prepare("SELECT * FROM clienti WHERE id = :id LIMIT 1");
-                        $stmt->bindParam(':id', $id);
+                        $stmt->bindParam(':id', $id, PDO::PARAM_INT); // Forza il tipo a INT
                         $stmt->execute();
                         
                         if ($stmt->rowCount() === 0) {
@@ -134,8 +134,8 @@ switch ($endpoint) {
                         
                         // Ottieni lista clienti
                         $stmt = $conn->prepare("SELECT * FROM clienti ORDER BY cognome, nome LIMIT :limit OFFSET :offset");
-                        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
-                        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+                        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT); // Usa bindValue per forzare il tipo
+                        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT); // Usa bindValue per forzare il tipo
                         $stmt->execute();
                         
                         $clienti = $stmt->fetchAll(PDO::FETCH_ASSOC);

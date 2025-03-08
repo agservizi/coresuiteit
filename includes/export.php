@@ -15,7 +15,6 @@ use TCPDF;
 
 /**
  * Esporta dati in formato Excel (XLSX)
- * 
  * @param array $data Array di dati da esportare
  * @param array $headers Array di intestazioni di colonna
  * @param string $filename Nome del file da generare
@@ -87,7 +86,6 @@ function exportToExcel($data, $headers, $filename, $sheetName = 'Sheet1', $downl
 
 /**
  * Esporta dati in formato CSV
- * 
  * @param array $data Array di dati da esportare
  * @param array $headers Array di intestazioni di colonna
  * @param string $filename Nome del file da generare
@@ -147,7 +145,6 @@ function exportToCsv($data, $headers, $filename, $download = true, $delimiter = 
 
 /**
  * Esporta dati in formato PDF
- * 
  * @param array $data Array di dati da esportare
  * @param array $headers Array di intestazioni di colonna
  * @param string $filename Nome del file da generare

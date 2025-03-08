@@ -1,6 +1,7 @@
 <?php
 require_once '../config/config.php';
 require_once '../includes/functions.php';
+require_once '../includes/documents.php'; // Assicurati che questo file sia incluso
 
 // Controllo permessi
 if (!isLoggedIn()) {

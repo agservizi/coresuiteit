@@ -11,12 +11,14 @@ function isLoggedIn() {
     return isset($_SESSION['user_id']);
 }
 
-/**
- * Ottiene il ruolo dell'utente corrente
- * @return string|null Il ruolo dell'utente o null se non è loggato
- */
-function getUserRole() {
-    return isset($_SESSION['user_role']) ? $_SESSION['user_role'] : null;
+if (!function_exists('getUserRole')) {
+    /**
+     * Ottiene il ruolo dell'utente corrente
+     * @return string|null Il ruolo dell'utente o null se non è loggato
+     */
+    function getUserRole() {
+        return isset($_SESSION['user_role']) ? $_SESSION['user_role'] : null;
+    }
 }
 
 /**
