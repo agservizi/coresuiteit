@@ -1,33 +1,21 @@
-"use client"
-
-import { useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
-import dynamic from "next/dynamic"
-
-// Dynamically import Recharts components to avoid SSR issues
-const BarChart = dynamic(() => import("recharts").then((mod) => mod.BarChart), { ssr: false })
-const Bar = dynamic(() => import("recharts").then((mod) => mod.Bar), { ssr: false })
-const XAxis = dynamic(() => import("recharts").then((mod) => mod.XAxis), { ssr: false })
-const YAxis = dynamic(() => import("recharts").then((mod) => mod.YAxis), { ssr: false })
-const CartesianGrid = dynamic(() => import("recharts").then((mod) => mod.CartesianGrid), { ssr: false })
-const Tooltip = dynamic(() => import("recharts").then((mod) => mod.Tooltip), { ssr: false })
-const Legend = dynamic(() => import("recharts").then((mod) => mod.Legend), { ssr: false })
-const ResponsiveContainer = dynamic(() => import("recharts").then((mod) => mod.ResponsiveContainer), { ssr: false })
-const PieChart = dynamic(() => import("recharts").then((mod) => mod.PieChart), { ssr: false })
-const Pie = dynamic(() => import("recharts").then((mod) => mod.Pie), { ssr: false })
-const Cell = dynamic(() => import("recharts").then((mod) => mod.Cell), { ssr: false })
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+} from "recharts"
 
 export default function ReportsPage() {
-  const [isClient, setIsClient] = useState(false)
-
-  // Use useEffect to set isClient to true after component mounts
-  // This ensures we only render charts on the client side
-  useState(() => {
-    setIsClient(true)
-  })
-
   const salesByProvider = [
     { name: "Fastweb", value: 4200 },
     { name: "Iliad", value: 3800 },
@@ -113,26 +101,18 @@ export default function ReportsPage() {
                 <CardDescription>Numero di prodotti venduti per categoria negli ultimi 6 mesi</CardDescription>
               </CardHeader>
               <CardContent>
-                {isClient ? (
-                  <div style={{ width: "100%", height: 400 }}>
-                    <ResponsiveContainer>
-                      <BarChart data={monthlySales}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        <Bar dataKey="sim" fill="#FF6B6B" name="SIM" />
-                        <Bar dataKey="devices" fill="#4ECDC4" name="Dispositivi" />
-                        <Bar dataKey="accessories" fill="#FFD166" name="Accessori" />
-                      </BarChart>
-                    </ResponsiveContainer>
-                  </div>
-                ) : (
-                  <div className="h-[400px] flex items-center justify-center bg-muted/20 rounded-md">
-                    <p>Caricamento grafico...</p>
-                  </div>
-                )}
+                <ResponsiveContainer width="100%" height={400}>
+                  <BarChart data={monthlySales}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Bar dataKey="sim" fill="#FF6B6B" name="SIM" />
+                    <Bar dataKey="devices" fill="#4ECDC4" name="Dispositivi" />
+                    <Bar dataKey="accessories" fill="#FFD166" name="Accessori" />
+                  </BarChart>
+                </ResponsiveContainer>
               </CardContent>
             </Card>
           </TabsContent>
@@ -143,34 +123,26 @@ export default function ReportsPage() {
                 <CardDescription>Distribuzione delle vendite tra i diversi gestori</CardDescription>
               </CardHeader>
               <CardContent>
-                {isClient ? (
-                  <div style={{ width: "100%", height: 400 }}>
-                    <ResponsiveContainer>
-                      <PieChart>
-                        <Pie
-                          data={salesByProvider}
-                          cx="50%"
-                          cy="50%"
-                          labelLine={true}
-                          label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                          outerRadius={150}
-                          fill="#8884d8"
-                          dataKey="value"
-                        >
-                          {salesByProvider.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                          ))}
-                        </Pie>
-                        <Tooltip formatter={(value) => `€${value}`} />
-                        <Legend />
-                      </PieChart>
-                    </ResponsiveContainer>
-                  </div>
-                ) : (
-                  <div className="h-[400px] flex items-center justify-center bg-muted/20 rounded-md">
-                    <p>Caricamento grafico...</p>
-                  </div>
-                )}
+                <ResponsiveContainer width="100%" height={400}>
+                  <PieChart>
+                    <Pie
+                      data={salesByProvider}
+                      cx="50%"
+                      cy="50%"
+                      labelLine={true}
+                      label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                      outerRadius={150}
+                      fill="#8884d8"
+                      dataKey="value"
+                    >
+                      {salesByProvider.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      ))}
+                    </Pie>
+                    <Tooltip formatter={(value) => `€${value}`} />
+                    <Legend />
+                  </PieChart>
+                </ResponsiveContainer>
               </CardContent>
             </Card>
           </TabsContent>
